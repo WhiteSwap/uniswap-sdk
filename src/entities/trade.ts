@@ -337,12 +337,7 @@ export class Trade {
     invariant(pairs.length > 0, 'PAIRS')
     invariant(maxHops > 0, 'MAX_HOPS')
     invariant(originalAmountOut === currencyAmountOut || currentPairs.length > 0, 'INVALID_RECURSION')
-    const chainId: ChainId | undefined =
-      currencyAmountOut instanceof TokenAmount
-        ? currencyAmountOut.token.chainId
-        : currencyIn instanceof Token
-        ? currencyIn.chainId
-        : undefined
+    const chainId: ChainId = currencyAmountOut.currency.chainId || currencyIn.chainId
     invariant(chainId !== undefined, 'CHAIN_ID')
 
     const amountOut = wrappedAmount(currencyAmountOut, chainId)
@@ -358,7 +353,7 @@ export class Trade {
         ;[amountIn] = pair.getInputAmount(amountOut)
       } catch (error) {
         // not enough liquidity in this pair
-        if (error.isInsufficientReservesError) {
+        if (error instanceof InsufficientInputAmountError && error.isInsufficientReservesError) {
           continue
         }
         throw error
