@@ -1,10 +1,8 @@
-import { Price } from './fractions/price'
-import { TokenAmount } from './fractions/tokenAmount'
+import { Price, TokenAmount } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import { pack, keccak256 } from '@ethersproject/solidity'
 import { getCreate2Address } from '@ethersproject/address'
-
 import {
   BigintIsh,
   FACTORY_ADDRESS,
@@ -15,11 +13,11 @@ import {
   FIVE,
   _997,
   _1000,
-  ChainId
-} from '../constants'
-import { sqrt, parseBigintIsh } from '../utils'
-import { InsufficientReservesError, InsufficientInputAmountError } from '../errors'
-import { Token } from './token'
+  ChainId,
+} from 'constants'
+import { sqrt, parseBigintIsh } from 'utils'
+import { InsufficientReservesError, InsufficientInputAmountError } from 'errors'
+import { Token } from 'entities'
 
 let PAIR_ADDRESS_CACHE: { [token0Address: string]: { [token1Address: string]: string } } = {}
 
@@ -39,8 +37,8 @@ export class Pair {
             FACTORY_ADDRESS,
             keccak256(['bytes'], [pack(['address', 'address'], [tokens[0].address, tokens[1].address])]),
             INIT_CODE_HASH
-          )
-        }
+          ),
+        },
       }
     }
 

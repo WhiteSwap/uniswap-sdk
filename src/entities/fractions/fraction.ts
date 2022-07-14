@@ -3,10 +3,9 @@ import JSBI from 'jsbi'
 import _Decimal from 'decimal.js-light'
 import _Big, { RoundingMode } from 'big.js'
 import toFormat from 'toformat'
-
-import { BigintIsh, Rounding } from '../../constants'
-import { ONE } from '../../constants'
-import { parseBigintIsh } from '../../utils'
+import { BigintIsh, Rounding } from 'constants'
+import { ONE } from 'constants'
+import { parseBigintIsh } from 'utils'
 
 const Decimal = toFormat(_Decimal)
 const Big = toFormat(_Big)
@@ -14,13 +13,13 @@ const Big = toFormat(_Big)
 const toSignificantRounding = {
   [Rounding.ROUND_DOWN]: Decimal.ROUND_DOWN,
   [Rounding.ROUND_HALF_UP]: Decimal.ROUND_HALF_UP,
-  [Rounding.ROUND_UP]: Decimal.ROUND_UP
+  [Rounding.ROUND_UP]: Decimal.ROUND_UP,
 }
 
 const toFixedRounding = {
   [Rounding.ROUND_DOWN]: RoundingMode.RoundDown,
   [Rounding.ROUND_HALF_UP]: RoundingMode.RoundHalfUp,
-  [Rounding.ROUND_UP]: RoundingMode.RoundUp
+  [Rounding.ROUND_UP]: RoundingMode.RoundUp,
 }
 
 export class Fraction {

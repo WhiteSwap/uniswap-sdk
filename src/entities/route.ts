@@ -1,10 +1,8 @@
-import { ChainId } from '../constants'
+import { ChainId } from 'constants'
 import invariant from 'tiny-invariant'
-
-import { Currency, ETHER } from './currency'
-import { Token, WETH } from './token'
-import { Pair } from './pair'
-import { Price } from './fractions/price'
+import { Currency, Token, Pair } from 'entities'
+import { Price } from 'entities/fractions'
+import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'entities/currencies'
 
 export class Route {
   public readonly pairs: Pair[]
@@ -16,22 +14,24 @@ export class Route {
   public constructor(pairs: Pair[], input: Currency, output?: Currency) {
     invariant(pairs.length > 0, 'PAIRS')
     invariant(
-      pairs.every(pair => pair.chainId === pairs[0].chainId),
+      pairs.every((pair) => pair.chainId === pairs[0].chainId),
       'CHAIN_IDS'
     )
     invariant(
       (input instanceof Token && pairs[0].involvesToken(input)) ||
-        (input === ETHER && pairs[0].involvesToken(WETH[pairs[0].chainId])),
+        (input.equals(NATIVE_CURRENCY[input.chainId]) &&
+          pairs[0].involvesToken(WRAPPED_NATIVE_CURRENCY[pairs[0].chainId])),
       'INPUT'
     )
     invariant(
       typeof output === 'undefined' ||
         (output instanceof Token && pairs[pairs.length - 1].involvesToken(output)) ||
-        (output === ETHER && pairs[pairs.length - 1].involvesToken(WETH[pairs[0].chainId])),
+        (output.equals(NATIVE_CURRENCY[input.chainId]) &&
+          pairs[pairs.length - 1].involvesToken(WRAPPED_NATIVE_CURRENCY[pairs[0].chainId])),
       'OUTPUT'
     )
 
-    const path: Token[] = [input instanceof Token ? input : WETH[pairs[0].chainId]]
+    const path: Token[] = [input instanceof Token ? input : WRAPPED_NATIVE_CURRENCY[pairs[0].chainId]]
     for (const [i, pair] of pairs.entries()) {
       const currentInput = path[i]
       invariant(currentInput.equals(pair.token0) || currentInput.equals(pair.token1), 'PATH')

@@ -1,16 +1,9 @@
 import invariant from 'tiny-invariant'
-
-import { ChainId, ONE, TradeType, ZERO } from '../constants'
-import { sortedInsert } from '../utils'
-import { Currency, ETHER } from './currency'
-import { CurrencyAmount } from './fractions/currencyAmount'
-import { Fraction } from './fractions/fraction'
-import { Percent } from './fractions/percent'
-import { Price } from './fractions/price'
-import { TokenAmount } from './fractions/tokenAmount'
-import { Pair } from './pair'
-import { Route } from './route'
-import { currencyEquals, Token, WETH } from './token'
+import { ChainId, ONE, TradeType, ZERO } from 'constants'
+import { sortedInsert } from 'utils'
+import { Currency, Pair, Route, currencyEquals, Token, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'entities'
+import { CurrencyAmount, Fraction, Percent, Price, TokenAmount } from 'entities/fractions'
+import { InsufficientInputAmountError } from 'errors'
 
 /**
  * Returns the percent difference between the mid price and the execution price, i.e. price impact.
@@ -89,13 +82,14 @@ export interface BestTradeOptions {
  */
 function wrappedAmount(currencyAmount: CurrencyAmount, chainId: ChainId): TokenAmount {
   if (currencyAmount instanceof TokenAmount) return currencyAmount
-  if (currencyAmount.currency === ETHER) return new TokenAmount(WETH[chainId], currencyAmount.raw)
+  if (currencyAmount.currency.equals(NATIVE_CURRENCY[chainId]))
+    return new TokenAmount(WRAPPED_NATIVE_CURRENCY[chainId], currencyAmount.raw)
   invariant(false, 'CURRENCY')
 }
 
 function wrappedCurrency(currency: Currency, chainId: ChainId): Token {
   if (currency instanceof Token) return currency
-  if (currency === ETHER) return WETH[chainId]
+  if (currency.equals(NATIVE_CURRENCY[chainId])) return WRAPPED_NATIVE_CURRENCY[chainId]
   invariant(false, 'CURRENCY')
 }
 
@@ -179,14 +173,14 @@ export class Trade {
     this.inputAmount =
       tradeType === TradeType.EXACT_INPUT
         ? amount
-        : route.input === ETHER
-        ? CurrencyAmount.ether(amounts[0].raw)
+        : route.input.equals(NATIVE_CURRENCY[route.chainId])
+        ? CurrencyAmount.native(amounts[0].raw, route.chainId)
         : amounts[0]
     this.outputAmount =
       tradeType === TradeType.EXACT_OUTPUT
         ? amount
-        : route.output === ETHER
-        ? CurrencyAmount.ether(amounts[amounts.length - 1].raw)
+        : route.output.equals(NATIVE_CURRENCY[route.chainId])
+        ? CurrencyAmount.native(amounts[amounts.length - 1].raw, route.chainId)
         : amounts[amounts.length - 1]
     this.executionPrice = new Price(
       this.inputAmount.currency,
@@ -213,7 +207,7 @@ export class Trade {
         .multiply(this.outputAmount.raw).quotient
       return this.outputAmount instanceof TokenAmount
         ? new TokenAmount(this.outputAmount.token, slippageAdjustedAmountOut)
-        : CurrencyAmount.ether(slippageAdjustedAmountOut)
+        : CurrencyAmount.native(slippageAdjustedAmountOut, this.route.chainId)
     }
   }
 
@@ -229,7 +223,7 @@ export class Trade {
       const slippageAdjustedAmountIn = new Fraction(ONE).add(slippageTolerance).multiply(this.inputAmount.raw).quotient
       return this.inputAmount instanceof TokenAmount
         ? new TokenAmount(this.inputAmount.token, slippageAdjustedAmountIn)
-        : CurrencyAmount.ether(slippageAdjustedAmountIn)
+        : CurrencyAmount.native(slippageAdjustedAmountIn, this.route.chainId)
     }
   }
 
@@ -260,12 +254,7 @@ export class Trade {
     invariant(pairs.length > 0, 'PAIRS')
     invariant(maxHops > 0, 'MAX_HOPS')
     invariant(originalAmountIn === currencyAmountIn || currentPairs.length > 0, 'INVALID_RECURSION')
-    const chainId: ChainId | undefined =
-      currencyAmountIn instanceof TokenAmount
-        ? currencyAmountIn.token.chainId
-        : currencyOut instanceof Token
-        ? currencyOut.chainId
-        : undefined
+    const chainId: ChainId = currencyAmountIn.currency.chainId || currencyOut.chainId
     invariant(chainId !== undefined, 'CHAIN_ID')
 
     const amountIn = wrappedAmount(currencyAmountIn, chainId)
@@ -281,7 +270,7 @@ export class Trade {
         ;[amountOut] = pair.getOutputAmount(amountIn)
       } catch (error) {
         // input too low
-        if (error.isInsufficientInputAmountError) {
+        if (error instanceof InsufficientInputAmountError && error.isInsufficientInputAmountError) {
           continue
         }
         throw error
@@ -308,7 +297,7 @@ export class Trade {
           currencyOut,
           {
             maxNumResults,
-            maxHops: maxHops - 1
+            maxHops: maxHops - 1,
           },
           [...currentPairs, pair],
           originalAmountIn,
@@ -396,7 +385,7 @@ export class Trade {
           amountIn,
           {
             maxNumResults,
-            maxHops: maxHops - 1
+            maxHops: maxHops - 1,
           },
           [pair, ...currentPairs],
           originalAmountOut,
