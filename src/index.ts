@@ -8,7 +8,7 @@ export {
   NATIVE_CURRENCY,
   WRAPPED_NATIVE_CURRENCY,
   WETH,
-} from 'constants'
+} from 'constants/index'
 export * from 'types'
 export * from 'entities'
 export * from 'router'

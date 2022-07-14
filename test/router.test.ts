@@ -1,6 +1,18 @@
 import invariant from 'tiny-invariant'
-import { ChainId, CurrencyAmount, Pair, Percent, Route, Router, Token, TokenAmount, Trade } from '../src'
-import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from '../src/constants'
+import {
+  ChainId,
+  CurrencyAmount,
+  Pair,
+  Percent,
+  Route,
+  Router,
+  Token,
+  TokenAmount,
+  Trade,
+  NATIVE_CURRENCY,
+  WRAPPED_NATIVE_CURRENCY,
+} from '../src'
+
 import JSBI from 'jsbi'
 
 function checkDeadline(deadline: string[] | string): void {
