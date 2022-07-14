@@ -27,7 +27,7 @@ describe('Router', () => {
         const result = Router.swapCallParameters(
           Trade.exactIn(
             new Route([pair_wrapped_0, pair_0_1], NATIVE_CURRENCY[pair_wrapped_0.chainId], token1),
-            CurrencyAmount.native(JSBI.BigInt(100), pair_wrapped_0.chainId)
+            CurrencyAmount.native(NATIVE_CURRENCY[pair_wrapped_0.chainId], JSBI.BigInt(100))
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
@@ -45,7 +45,7 @@ describe('Router', () => {
         const result = Router.swapCallParameters(
           Trade.exactIn(
             new Route([pair_wrapped_0, pair_0_1], NATIVE_CURRENCY[pair_wrapped_0.chainId], token1),
-            CurrencyAmount.native(JSBI.BigInt(100), pair_wrapped_0.chainId)
+            CurrencyAmount.native(NATIVE_CURRENCY[pair_wrapped_0.chainId], JSBI.BigInt(100))
           ),
           {
             deadline: 50,
@@ -119,7 +119,7 @@ describe('Router', () => {
         const result = Router.swapCallParameters(
           Trade.exactOut(
             new Route([pair_0_1, pair_wrapped_0], token1, NATIVE_CURRENCY[pair_0_1.chainId]),
-            CurrencyAmount.native(JSBI.BigInt(100), pair_0_1.chainId)
+            CurrencyAmount.native(NATIVE_CURRENCY[pair_0_1.chainId], JSBI.BigInt(100))
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
@@ -155,7 +155,7 @@ describe('Router', () => {
           const result = Router.swapCallParameters(
             Trade.exactIn(
               new Route([pair_wrapped_0, pair_0_1], NATIVE_CURRENCY[pair_0_1.chainId], token1),
-              CurrencyAmount.native(JSBI.BigInt(100), pair_0_1.chainId)
+              CurrencyAmount.native(NATIVE_CURRENCY[pair_0_1.chainId], JSBI.BigInt(100))
             ),
             {
               ttl: 50,
@@ -239,7 +239,7 @@ describe('Router', () => {
             Router.swapCallParameters(
               Trade.exactOut(
                 new Route([pair_0_1, pair_wrapped_0], token1, NATIVE_CURRENCY[pair_0_1.chainId]),
-                CurrencyAmount.native(JSBI.BigInt(100), pair_0_1.chainId)
+                CurrencyAmount.native(NATIVE_CURRENCY[pair_0_1.chainId], JSBI.BigInt(100))
               ),
               {
                 ttl: 50,

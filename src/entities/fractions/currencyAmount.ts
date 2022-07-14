@@ -1,4 +1,4 @@
-import { Currency, currencyEquals } from 'entities'
+import { Currency, currencyEquals, NativeCurrency } from 'entities'
 import { Fraction } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
@@ -16,8 +16,8 @@ export class CurrencyAmount extends Fraction {
    * Helper that calls the constructor with the NATIVE currency
    * @param amount native currency amount in wei
    */
-  public static native(amount: BigintIsh, chainId: number): CurrencyAmount {
-    return new CurrencyAmount(NATIVE_CURRENCY[chainId], amount)
+  public static native(currency: NativeCurrency, amount: BigintIsh): CurrencyAmount {
+    return new CurrencyAmount(currency, amount)
   }
 
   // amount _must_ be raw, i.e. in the native representation

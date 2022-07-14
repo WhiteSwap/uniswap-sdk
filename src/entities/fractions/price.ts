@@ -2,7 +2,7 @@ import { Token, currencyEquals, Currency, Route } from 'entities'
 import { TokenAmount, Fraction, CurrencyAmount } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
-import { BigintIsh, Rounding, TEN } from 'constants'
+import { BigintIsh, NATIVE_CURRENCY, Rounding, TEN } from 'constants'
 
 export class Price extends Fraction {
   public readonly baseCurrency: Currency // input i.e. denominator
@@ -57,7 +57,10 @@ export class Price extends Fraction {
     if (this.quoteCurrency instanceof Token) {
       return new TokenAmount(this.quoteCurrency, super.multiply(currencyAmount.raw).quotient)
     }
-    return CurrencyAmount.native(super.multiply(currencyAmount.raw).quotient, currencyAmount.currency.chainId)
+    return CurrencyAmount.native(
+      NATIVE_CURRENCY[currencyAmount.currency.chainId],
+      super.multiply(currencyAmount.raw).quotient
+    )
   }
 
   public toSignificant(significantDigits: number = 6, format?: object, rounding?: Rounding): string {
