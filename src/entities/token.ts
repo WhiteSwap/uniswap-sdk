@@ -1,6 +1,7 @@
 import invariant from 'tiny-invariant'
 import { validateAndParseAddress } from 'utils'
 import { Currency, BaseCurrency } from 'entities'
+import { ChainId } from 'types'
 
 export class Token extends BaseCurrency {
   public readonly isNative: false = false
@@ -8,7 +9,7 @@ export class Token extends BaseCurrency {
 
   public readonly address: string
 
-  public constructor(chainId: number, address: string, decimals: number, symbol?: string, name?: string) {
+  public constructor(chainId: ChainId, address: string, decimals: number, symbol?: string, name?: string) {
     super(chainId, decimals, symbol, name)
     this.address = validateAndParseAddress(address)
   }

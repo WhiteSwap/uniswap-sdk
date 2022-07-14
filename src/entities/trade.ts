@@ -1,9 +1,10 @@
 import invariant from 'tiny-invariant'
-import { ChainId, ONE, TradeType, ZERO, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
+import { ONE, ZERO, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
 import { sortedInsert } from 'utils'
 import { Currency, Pair, Route, currencyEquals, Token } from 'entities'
 import { CurrencyAmount, Fraction, Percent, Price, TokenAmount } from 'entities/fractions'
-import { InsufficientInputAmountError } from 'errors'
+import { InsufficientInputAmountError, InsufficientReservesError } from 'types'
+import { ChainId, TradeType } from 'types'
 
 /**
  * Returns the percent difference between the mid price and the execution price, i.e. price impact.
@@ -353,7 +354,7 @@ export class Trade {
         ;[amountIn] = pair.getInputAmount(amountOut)
       } catch (error) {
         // not enough liquidity in this pair
-        if (error instanceof InsufficientInputAmountError && error.isInsufficientReservesError) {
+        if (error instanceof InsufficientReservesError && error.isInsufficientReservesError) {
           continue
         }
         throw error

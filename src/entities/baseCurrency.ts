@@ -1,4 +1,4 @@
-import { ChainId } from 'constants'
+import { ChainId } from 'types'
 import { Currency, Token } from 'entities'
 import invariant from 'tiny-invariant'
 

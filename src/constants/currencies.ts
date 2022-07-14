@@ -1,7 +1,9 @@
-import { ChainId } from 'constants'
-import { NativeCurrency, Token } from 'entities'
+import { ChainId } from 'types'
+import { NativeCurrency, Token, Currency } from 'entities'
 
-export const WETH: { [key: number]: Token } = {
+type Currencies<T extends Currency> = { [chainId in ChainId]: T }
+
+export const WETH: Currencies<Token> = {
   [ChainId.MAINNET]: new Token(
     ChainId.MAINNET,
     '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
@@ -53,7 +55,7 @@ export const WETH: { [key: number]: Token } = {
   ),
 }
 
-export const NATIVE_CURRENCY: { [key: number]: NativeCurrency } = {
+export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
   [ChainId.ROPSTEN]: new NativeCurrency(ChainId.ROPSTEN, 18, 'RopETH', 'Ropsten Ether'),
   [ChainId.RINKEBY]: new NativeCurrency(ChainId.RINKEBY, 18, 'RinETH', 'Rinkeby Ether'),
@@ -63,7 +65,7 @@ export const NATIVE_CURRENCY: { [key: number]: NativeCurrency } = {
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
 }
 
-export const WRAPPED_NATIVE_CURRENCY: { [key: number]: Token } = {
+export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
   ...WETH,
   [ChainId.POLYGON]: new Token(
     ChainId.POLYGON,

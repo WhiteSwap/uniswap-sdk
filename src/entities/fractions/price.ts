@@ -2,7 +2,8 @@ import { Token, currencyEquals, Currency, Route } from 'entities'
 import { TokenAmount, Fraction, CurrencyAmount } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
-import { BigintIsh, NATIVE_CURRENCY, Rounding, TEN } from 'constants'
+import { NATIVE_CURRENCY, TEN } from 'constants'
+import { BigintIsh, Rounding } from 'types'
 
 export class Price extends Fraction {
   public readonly baseCurrency: Currency // input i.e. denominator

@@ -1,4 +1,4 @@
-import { ChainId } from 'constants/shared'
+import { ChainId } from 'types'
 import invariant from 'tiny-invariant'
 import { Currency, Token, Pair } from 'entities'
 import { Price } from 'entities/fractions'

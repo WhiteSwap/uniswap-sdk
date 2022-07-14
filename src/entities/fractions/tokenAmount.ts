@@ -2,7 +2,7 @@ import { CurrencyAmount } from 'entities/fractions'
 import { Token } from 'entities'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
-import { BigintIsh } from 'constants'
+import { BigintIsh } from 'types'
 
 export class TokenAmount extends CurrencyAmount {
   public readonly token: Token
