@@ -1,5 +1,5 @@
-import { ChainId } from 'constants'
-import { BaseCurrency, Token, Currency, WRAPPED_NATIVE_CURRENCY } from 'entities'
+import { ChainId, WRAPPED_NATIVE_CURRENCY } from 'constants'
+import { BaseCurrency, Token, Currency } from 'entities'
 import invariant from 'tiny-invariant'
 
 export class NativeCurrency extends BaseCurrency {

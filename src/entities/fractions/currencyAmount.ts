@@ -1,11 +1,10 @@
 import { Currency, currencyEquals } from 'entities'
-import { NATIVE_CURRENCY } from 'entities/currencies'
 import { Fraction } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
-import { BigintIsh, Rounding, TEN, SolidityType } from 'constants'
+import { BigintIsh, Rounding, TEN, SolidityType, NATIVE_CURRENCY } from 'constants'
 import { parseBigintIsh, validateSolidityTypeInstance } from 'utils'
 
 const Big = toFormat(_Big)

@@ -1,7 +1,7 @@
 import invariant from 'tiny-invariant'
-import { ChainId, ONE, TradeType, ZERO } from 'constants'
+import { ChainId, ONE, TradeType, ZERO, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
 import { sortedInsert } from 'utils'
-import { Currency, Pair, Route, currencyEquals, Token, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'entities'
+import { Currency, Pair, Route, currencyEquals, Token } from 'entities'
 import { CurrencyAmount, Fraction, Percent, Price, TokenAmount } from 'entities/fractions'
 import { InsufficientInputAmountError } from 'errors'
 

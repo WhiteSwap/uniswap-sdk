@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant'
 import { validateAndParseAddress } from 'utils'
-import { Currency, BaseCurrency } from 'entities/baseCurrency'
+import { Currency, BaseCurrency } from 'entities'
 
 export class Token extends BaseCurrency {
   public readonly isNative: false = false

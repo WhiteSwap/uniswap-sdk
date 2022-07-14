@@ -1,8 +1,8 @@
-import { ChainId } from 'constants'
+import { ChainId } from 'constants/shared'
 import invariant from 'tiny-invariant'
 import { Currency, Token, Pair } from 'entities'
 import { Price } from 'entities/fractions'
-import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'entities/currencies'
+import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
 
 export class Route {
   public readonly pairs: Pair[]
