@@ -2,7 +2,7 @@ import { Token, currencyEquals, Currency, Route } from 'entities'
 import { TokenAmount, Fraction, CurrencyAmount } from 'entities/fractions'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
-import { NATIVE_CURRENCY, TEN } from 'constants'
+import { NATIVE_CURRENCY, TEN } from 'constants/index'
 import { BigintIsh, Rounding } from 'types'
 
 export class Price extends Fraction {

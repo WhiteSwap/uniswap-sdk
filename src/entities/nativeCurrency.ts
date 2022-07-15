@@ -1,4 +1,4 @@
-import { WRAPPED_NATIVE_CURRENCY } from 'constants'
+import { WRAPPED_NATIVE_CURRENCY } from 'constants/index'
 import { BaseCurrency, Token, Currency } from 'entities'
 import invariant from 'tiny-invariant'
 import { ChainId } from 'types'

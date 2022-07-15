@@ -2,7 +2,7 @@ import { ChainId } from 'types'
 import invariant from 'tiny-invariant'
 import { Currency, Token, Pair } from 'entities'
 import { Price } from 'entities/fractions'
-import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
+import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants/index'
 
 export class Route {
   public readonly pairs: Pair[]
@@ -14,7 +14,7 @@ export class Route {
   public constructor(pairs: Pair[], input: Currency, output?: Currency) {
     invariant(pairs.length > 0, 'PAIRS')
     invariant(
-      pairs.every((pair) => pair.chainId === pairs[0].chainId),
+      pairs.every(pair => pair.chainId === pairs[0].chainId),
       'CHAIN_IDS'
     )
     invariant(

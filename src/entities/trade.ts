@@ -1,5 +1,5 @@
 import invariant from 'tiny-invariant'
-import { ONE, ZERO, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants'
+import { ONE, ZERO, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from 'constants/index'
 import { sortedInsert } from 'utils'
 import { Currency, Pair, Route, currencyEquals, Token } from 'entities'
 import { CurrencyAmount, Fraction, Percent, Price, TokenAmount } from 'entities/fractions'
@@ -298,7 +298,7 @@ export class Trade {
           currencyOut,
           {
             maxNumResults,
-            maxHops: maxHops - 1,
+            maxHops: maxHops - 1
           },
           [...currentPairs, pair],
           originalAmountIn,
@@ -381,7 +381,7 @@ export class Trade {
           amountIn,
           {
             maxNumResults,
-            maxHops: maxHops - 1,
+            maxHops: maxHops - 1
           },
           [pair, ...currentPairs],
           originalAmountOut,

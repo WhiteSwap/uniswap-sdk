@@ -3,7 +3,7 @@ import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import { pack, keccak256 } from '@ethersproject/solidity'
 import { getCreate2Address } from '@ethersproject/address'
-import { FACTORY_ADDRESS, INIT_CODE_HASH, MINIMUM_LIQUIDITY, ZERO, ONE, FIVE, _997, _1000 } from 'constants'
+import { FACTORY_ADDRESS, INIT_CODE_HASH, MINIMUM_LIQUIDITY, ZERO, ONE, FIVE, _997, _1000 } from 'constants/index'
 import { sqrt, parseBigintIsh } from 'utils'
 import { InsufficientReservesError, InsufficientInputAmountError } from 'types/errors'
 import { Token } from 'entities'
@@ -27,8 +27,8 @@ export class Pair {
             FACTORY_ADDRESS,
             keccak256(['bytes'], [pack(['address', 'address'], [tokens[0].address, tokens[1].address])]),
             INIT_CODE_HASH
-          ),
-        },
+          )
+        }
       }
     }
 

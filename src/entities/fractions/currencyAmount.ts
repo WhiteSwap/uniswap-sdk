@@ -4,7 +4,7 @@ import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
-import { TEN } from 'constants'
+import { TEN } from 'constants/index'
 import { parseBigintIsh, validateSolidityTypeInstance } from 'utils'
 import { BigintIsh, Rounding, SolidityType } from 'types'
 

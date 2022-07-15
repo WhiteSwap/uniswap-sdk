@@ -1,4 +1,4 @@
-import { _100 } from 'constants'
+import { _100 } from 'constants/index'
 import { Fraction } from 'entities/fractions'
 import { Rounding } from 'types'
 
