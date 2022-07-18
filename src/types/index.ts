@@ -1,2 +1,2 @@
-export * from 'types/errors'
-export * from 'types/shared'
+export * from './errors'
+export * from './shared'

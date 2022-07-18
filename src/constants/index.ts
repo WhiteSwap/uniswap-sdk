@@ -1,2 +1,2 @@
-export * from 'constants/shared'
-export * from 'constants/currencies'
+export * from './shared'
+export * from './currencies'

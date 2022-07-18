@@ -1,7 +1,7 @@
-import { TradeType } from 'types'
+import { TradeType } from './types'
 import invariant from 'tiny-invariant'
-import { validateAndParseAddress } from 'utils'
-import { CurrencyAmount, Percent, Trade } from 'entities'
+import { validateAndParseAddress } from './utils'
+import { CurrencyAmount, Percent, Trade } from './entities'
 
 /**
  * Options for producing the arguments to send call to the router.
@@ -83,7 +83,7 @@ export abstract class Router {
     const to: string = validateAndParseAddress(options.recipient)
     const amountIn: string = toHex(trade.maximumAmountIn(options.allowedSlippage))
     const amountOut: string = toHex(trade.minimumAmountOut(options.allowedSlippage))
-    const path: string[] = trade.route.path.map((token) => token.address)
+    const path: string[] = trade.route.path.map(token => token.address)
     const deadline =
       'ttl' in options
         ? `0x${(Math.floor(new Date().getTime() / 1000) + options.ttl).toString(16)}`
@@ -138,7 +138,7 @@ export abstract class Router {
     return {
       methodName,
       args,
-      value,
+      value
     }
   }
 }

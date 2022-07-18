@@ -2,8 +2,8 @@ import invariant from 'tiny-invariant'
 import warning from 'tiny-warning'
 import JSBI from 'jsbi'
 import { getAddress } from '@ethersproject/address'
-import { ZERO, ONE, TWO, THREE, SOLIDITY_TYPE_MAXIMA } from 'constants/index'
-import { BigintIsh, SolidityType } from 'types'
+import { ZERO, ONE, TWO, THREE, SOLIDITY_TYPE_MAXIMA } from './constants/index'
+import { BigintIsh, SolidityType } from './types'
 
 export function validateSolidityTypeInstance(value: JSBI, solidityType: SolidityType): void {
   invariant(JSBI.greaterThanOrEqual(value, ZERO), `${value} is not a ${solidityType}.`)

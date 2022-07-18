@@ -1,5 +1,6 @@
-import { ChainId } from 'types'
-import { Currency, Token } from 'entities'
+import { ChainId } from '../types'
+import { Currency } from './currency'
+import { Token } from './token'
 import invariant from 'tiny-invariant'
 
 export abstract class BaseCurrency {

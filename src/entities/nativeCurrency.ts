@@ -1,7 +1,9 @@
-import { WRAPPED_NATIVE_CURRENCY } from 'constants/index'
-import { BaseCurrency, Token, Currency } from 'entities'
+import { WRAPPED_NATIVE_CURRENCY } from '../constants/index'
+import { BaseCurrency } from './baseCurrency'
+import { Token } from './token'
+import { Currency } from './currency'
 import invariant from 'tiny-invariant'
-import { ChainId } from 'types'
+import { ChainId } from '../types'
 
 export class NativeCurrency extends BaseCurrency {
   public readonly isNative: true = true

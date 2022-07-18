@@ -3,9 +3,9 @@ import JSBI from 'jsbi'
 import _Decimal from 'decimal.js-light'
 import _Big, { RoundingMode } from 'big.js'
 import toFormat from 'toformat'
-import { ONE } from 'constants/index'
-import { parseBigintIsh } from 'utils'
-import { BigintIsh, Rounding } from 'types'
+import { ONE } from '../../constants/index'
+import { parseBigintIsh } from '../../utils'
+import { BigintIsh, Rounding } from '../../types'
 
 const Decimal = toFormat(_Decimal)
 const Big = toFormat(_Big)
