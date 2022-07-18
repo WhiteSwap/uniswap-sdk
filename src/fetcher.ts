@@ -1,13 +1,12 @@
 import { Contract } from '@ethersproject/contracts'
 import { getNetwork } from '@ethersproject/networks'
 import { getDefaultProvider } from '@ethersproject/providers'
-import { TokenAmount } from './entities/fractions/tokenAmount'
-import { Pair } from './entities/pair'
+import { TokenAmount } from './entities/fractions'
+import { Pair, Token } from './entities'
 import IUniswapV2Pair from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import invariant from 'tiny-invariant'
 import ERC20 from './abis/ERC20.json'
-import { ChainId } from './constants'
-import { Token } from './entities/token'
+import { ChainId } from './types'
 
 let TOKEN_DECIMALS_CACHE: { [chainId: number]: { [address: string]: number } } = {
   [ChainId.MAINNET]: {

@@ -1,29 +1,36 @@
 {
-  "include": ["src", "test"],
   "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
+    "rootDir": "./src",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
     "strict": true,
-    "noImplicitAny": true,
+    "alwaysStrict": true,
     "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
+    "removeComments": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
       "*": ["src/*", "node_modules/*"]
-    },
-    "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    }
+  },
+  "include": ["src", "./src/**/*.ts", "test"],
+  "exclude": ["node_modules/*"]
 }
