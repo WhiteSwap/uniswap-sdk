@@ -1,14 +1,13 @@
-import { Token } from '../token'
-import { TokenAmount } from './tokenAmount'
-import { currencyEquals } from '../token'
-import invariant from 'tiny-invariant'
-import JSBI from 'jsbi'
-
-import { BigintIsh, Rounding, TEN } from '../../constants'
+import { Token, currencyEquals } from '../token'
 import { Currency } from '../currency'
 import { Route } from '../route'
+import { TokenAmount } from './tokenAmount'
 import { Fraction } from './fraction'
 import { CurrencyAmount } from './currencyAmount'
+import invariant from 'tiny-invariant'
+import JSBI from 'jsbi'
+import { NATIVE_CURRENCY, TEN } from '../../constants/index'
+import { BigintIsh, Rounding } from '../../types'
 
 export class Price extends Fraction {
   public readonly baseCurrency: Currency // input i.e. denominator
@@ -63,7 +62,10 @@ export class Price extends Fraction {
     if (this.quoteCurrency instanceof Token) {
       return new TokenAmount(this.quoteCurrency, super.multiply(currencyAmount.raw).quotient)
     }
-    return CurrencyAmount.ether(super.multiply(currencyAmount.raw).quotient)
+    return CurrencyAmount.native(
+      NATIVE_CURRENCY[currencyAmount.currency.chainId],
+      super.multiply(currencyAmount.raw).quotient
+    )
   }
 
   public toSignificant(significantDigits: number = 6, format?: object, rounding?: Rounding): string {

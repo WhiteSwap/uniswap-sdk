@@ -1,13 +1,14 @@
+import { Currency } from '../currency'
+import { NativeCurrency } from '../nativeCurrency'
 import { currencyEquals } from '../token'
-import { Currency, ETHER } from '../currency'
+import { Fraction } from './fraction'
 import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
-
-import { BigintIsh, Rounding, TEN, SolidityType } from '../../constants'
+import { TEN } from '../../constants/index'
 import { parseBigintIsh, validateSolidityTypeInstance } from '../../utils'
-import { Fraction } from './fraction'
+import { BigintIsh, Rounding, SolidityType } from '../../types'
 
 const Big = toFormat(_Big)
 
@@ -15,11 +16,11 @@ export class CurrencyAmount extends Fraction {
   public readonly currency: Currency
 
   /**
-   * Helper that calls the constructor with the ETHER currency
-   * @param amount ether amount in wei
+   * Helper that calls the constructor with the NATIVE currency
+   * @param amount native currency amount in wei
    */
-  public static ether(amount: BigintIsh): CurrencyAmount {
-    return new CurrencyAmount(ETHER, amount)
+  public static native(currency: NativeCurrency, amount: BigintIsh): CurrencyAmount {
+    return new CurrencyAmount(currency, amount)
   }
 
   // amount _must_ be raw, i.e. in the native representation
