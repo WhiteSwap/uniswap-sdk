@@ -1,7 +1,15 @@
 import JSBI from 'jsbi'
-import { SolidityType } from '../types'
+import { ChainId, SolidityType } from '../types'
 
-export const FACTORY_ADDRESS = '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677'
+export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
+  [ChainId.MAINNET]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
+  [ChainId.ROPSTEN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
+  [ChainId.RINKEBY]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
+  [ChainId.GOERLI]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
+  [ChainId.KOVAN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
+  [ChainId.POLYGON]: '',
+  [ChainId.POLYGON_MUMBAI]: '0x5757371414417b8c6caad45baef941abc7d3ab32'
+}
 
 export const INIT_CODE_HASH = '0xfad2a9a251fff38151d87d2aa4e39e75ad40feabd873069329d3c31ab9afe018'
 
