@@ -1,7 +1,7 @@
 import JSBI from 'jsbi'
 import { ChainId, SolidityType } from '../types'
 
-export const FACTORY_ADDRESS: { [key: number]: string } = {
+export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
   [ChainId.MAINNET]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.ROPSTEN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.RINKEBY]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
