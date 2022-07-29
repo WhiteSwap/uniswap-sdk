@@ -8,7 +8,7 @@ export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
   [ChainId.GOERLI]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.KOVAN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.POLYGON]: '',
-  [ChainId.POLYGON_MUMBAI]: '0x5757371414417b8c6caad45baef941abc7d3ab32'
+  [ChainId.POLYGON_MUMBAI]: '0x56c2162254b0e4417288786ee402c2b41d4e181e'
 }
 
 export const INIT_CODE_HASH = '0xfad2a9a251fff38151d87d2aa4e39e75ad40feabd873069329d3c31ab9afe018'
