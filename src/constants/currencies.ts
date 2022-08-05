@@ -82,3 +82,4 @@ export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
     'Wrapped Mumbai Matic'
   )
 }
+
