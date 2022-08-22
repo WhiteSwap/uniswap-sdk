@@ -9,21 +9,21 @@ export enum ChainId {
   GOERLI = 5,
   KOVAN = 42,
   POLYGON = 137,
-  POLYGON_MUMBAI = 80001,
+  POLYGON_MUMBAI = 80001
 }
 
 export enum TradeType {
   EXACT_INPUT,
-  EXACT_OUTPUT,
+  EXACT_OUTPUT
 }
 
 export enum Rounding {
   ROUND_DOWN,
   ROUND_HALF_UP,
-  ROUND_UP,
+  ROUND_UP
 }
 
 export enum SolidityType {
   uint8 = 'uint8',
-  uint256 = 'uint256',
+  uint256 = 'uint256'
 }
