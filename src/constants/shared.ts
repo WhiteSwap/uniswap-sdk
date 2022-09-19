@@ -3,10 +3,7 @@ import { ChainId, SolidityType } from '../types'
 
 export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
   [ChainId.MAINNET]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
-  [ChainId.ROPSTEN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
-  [ChainId.RINKEBY]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.GOERLI]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
-  [ChainId.KOVAN]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.POLYGON]: '',
   [ChainId.POLYGON_MUMBAI]: '0xf9d191e14982441e045f13e94f78096be01f6421'
 }
