@@ -11,33 +11,12 @@ export const WETH: Currencies<Token> = {
     'WETH',
     'Wrapped Ether'
   ),
-  [ChainId.ROPSTEN]: new Token(
-    ChainId.ROPSTEN,
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab',
-    18,
-    'WETH',
-    'Wrapped Ropsten Ether'
-  ),
-  [ChainId.RINKEBY]: new Token(
-    ChainId.RINKEBY,
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab',
-    18,
-    'WETH',
-    'Wrapped Rinkeby Ether'
-  ),
   [ChainId.GOERLI]: new Token(
     ChainId.GOERLI,
     '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
     18,
     'WETH',
     'Wrapped Goerli Ether'
-  ),
-  [ChainId.KOVAN]: new Token(
-    ChainId.KOVAN,
-    '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
-    18,
-    'WETH',
-    'Wrapped Kovan Ether'
   ),
   [ChainId.POLYGON]: new Token(
     ChainId.POLYGON,
@@ -57,10 +36,7 @@ export const WETH: Currencies<Token> = {
 
 export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
-  [ChainId.ROPSTEN]: new NativeCurrency(ChainId.ROPSTEN, 18, 'RopETH', 'Ropsten Ether'),
-  [ChainId.RINKEBY]: new NativeCurrency(ChainId.RINKEBY, 18, 'RinETH', 'Rinkeby Ether'),
-  [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GoeETH', 'Goerli Ether'),
-  [ChainId.KOVAN]: new NativeCurrency(ChainId.KOVAN, 18, 'KovETH', 'Kovan Ether'),
+  [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
   [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic')
 }
