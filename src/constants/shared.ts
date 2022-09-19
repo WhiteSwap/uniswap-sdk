@@ -8,7 +8,7 @@ export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
   [ChainId.POLYGON_MUMBAI]: '0xf9d191e14982441e045f13e94f78096be01f6421'
 }
 
-export const INIT_CODE_HASH = '0xfad2a9a251fff38151d87d2aa4e39e75ad40feabd873069329d3c31ab9afe018'
+export const INIT_CODE_HASH = '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f'
 
 export const MINIMUM_LIQUIDITY = JSBI.BigInt(1000)
 
