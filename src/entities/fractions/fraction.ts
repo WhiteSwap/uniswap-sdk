@@ -10,6 +10,12 @@ import { BigintIsh, Rounding } from '../../types'
 const Decimal = toFormat(_Decimal)
 const Big = toFormat(_Big)
 
+Decimal.set({
+  precision: 50,
+  toExpNeg: -50,
+  toExpPos: 50
+})
+
 const toSignificantRounding = {
   [Rounding.ROUND_DOWN]: Decimal.ROUND_DOWN,
   [Rounding.ROUND_HALF_UP]: Decimal.ROUND_HALF_UP,
@@ -121,7 +127,7 @@ export class Fraction {
     invariant(Number.isInteger(significantDigits), `${significantDigits} is not an integer.`)
     invariant(significantDigits > 0, `${significantDigits} is not positive.`)
 
-    Decimal.set({ precision: significantDigits + 1, rounding: toSignificantRounding[rounding] })
+    Decimal.set({ rounding: toSignificantRounding[rounding] })
     const quotient = new Decimal(this.numerator.toString())
       .div(this.denominator.toString())
       .toSignificantDigits(significantDigits)
@@ -139,5 +145,23 @@ export class Fraction {
     Big.DP = decimalPlaces
     Big.RM = toFixedRounding[rounding]
     return new Big(this.numerator.toString()).div(this.denominator.toString()).toFormat(decimalPlaces, format)
+  }
+
+  public toDecimalPlaces(
+    decimalPlaces: number,
+    format: object = { groupSeparator: '' },
+    rounding: Rounding = Rounding.ROUND_HALF_UP
+  ): string {
+    invariant(Number.isInteger(decimalPlaces), `${decimalPlaces} is not an integer.`)
+    invariant(decimalPlaces >= 0, `${decimalPlaces} is negative.`)
+
+    Decimal.set({
+      rounding: toSignificantRounding[rounding]
+    })
+    const quotient = new Decimal(this.numerator.toString())
+      .div(this.denominator.toString())
+      .toDecimalPlaces(decimalPlaces, toSignificantRounding[rounding])
+
+    return quotient.toFormat(format)
   }
 }

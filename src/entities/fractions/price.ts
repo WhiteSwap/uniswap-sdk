@@ -75,4 +75,8 @@ export class Price extends Fraction {
   public toFixed(decimalPlaces: number = 4, format?: object, rounding?: Rounding): string {
     return this.adjusted.toFixed(decimalPlaces, format, rounding)
   }
+
+  public toDecimalPlaces(decimalPlaces: number = 8, format?: object, rounding?: Rounding): string {
+    return super.toDecimalPlaces(decimalPlaces, format, rounding)
+  }
 }

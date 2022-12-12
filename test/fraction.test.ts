@@ -118,4 +118,29 @@ describe.only('Fraction', () => {
       ).toEqual(new Fraction(JSBI.BigInt(60), JSBI.BigInt(48)))
     })
   })
+  describe('#toDecimalPlaces', () => {
+    const fraction = new Fraction(JSBI.BigInt(1234544), JSBI.BigInt(1000))
+    it('should fail when pass incorrect decimal places', () => {
+      const decimalPlaces = 1.5
+      try {
+        fraction.toDecimalPlaces(decimalPlaces)
+      } catch (error) {
+        expect((error as Error).message).toEqual(`Invariant failed: ${decimalPlaces} is not an integer.`)
+      }
+    })
+    it('should fail when pass negative decimals places', () => {
+      const decimalPlaces = -1
+      try {
+        fraction.toDecimalPlaces(decimalPlaces)
+      } catch (error) {
+        expect((error as Error).message).toEqual(`Invariant failed: ${decimalPlaces} is negative.`)
+      }
+    })
+    it('should format fraction to decimal places', () => {
+      expect(fraction.toDecimalPlaces(6)).toEqual('1234.544')
+    })
+    it('should format fraction with comma separator', () => {
+      expect(fraction.toDecimalPlaces(4, { groupSeparator: ',' })).toEqual('1,234.544')
+    })
+  })
 })
