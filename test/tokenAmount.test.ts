@@ -6,7 +6,7 @@ describe('TokenAmount', () => {
   const amount = JSBI.BigInt(123451231234)
 
   describe('#toDecimalPlaces', () => {
-    it('should format amount to default token decimals', () => {
+    it('should format amount to token decimals', () => {
       expect(new TokenAmount(new Token(ChainId.MAINNET, ADDRESS_ONE, 6), amount).toDecimalPlaces()).toEqual(
         '123451.231234'
       )

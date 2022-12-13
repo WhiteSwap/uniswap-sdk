@@ -68,16 +68,16 @@ export class CurrencyAmount extends Fraction {
     return new Big(this.numerator.toString()).div(this.denominator.toString()).toFormat(format)
   }
 
-  public toDecimalPlaces(
-    decimalPlaces: number = this.currency.decimals,
-    format?: object,
-    rounding: Rounding = Rounding.ROUND_DOWN
-  ): string {
-    invariant(
-      decimalPlaces <= this.currency.decimals,
-      `decimalsPlaces param must be less or equal to token decimals. Received: ${decimalPlaces}, currency decimals: ${this.currency.decimals}`
-    )
+  public toDecimalPlaces(decimals?: number, format?: object, rounding: Rounding = Rounding.ROUND_DOWN): string {
+    if (decimals) {
+      invariant(
+        decimals <= this.currency.decimals,
+        `decimalsPlaces param must be less or equal to token decimals. Received: ${decimals}, currency decimals: ${this.currency.decimals}`
+      )
+    }
+    const maxDecimals = 8
+    const defaultDecimalsPlaces = this.currency.decimals < maxDecimals ? this.currency.decimals : maxDecimals
 
-    return super.toDecimalPlaces(decimalPlaces < 8 ? decimalPlaces : 8, format, rounding)
+    return super.toDecimalPlaces(decimals ?? defaultDecimalsPlaces, format, rounding)
   }
 }
