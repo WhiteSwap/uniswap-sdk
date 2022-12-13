@@ -12,4 +12,8 @@ export class Percent extends Fraction {
   public toFixed(decimalPlaces: number = 2, format?: object, rounding?: Rounding): string {
     return this.multiply(_100_PERCENT).toFixed(decimalPlaces, format, rounding)
   }
+
+  public toDecimalPlaces(decimalPlaces: number = 2, format?: object, rounding?: Rounding): string {
+    return super.toDecimalPlaces(decimalPlaces, format, rounding)
+  }
 }
