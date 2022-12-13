@@ -77,6 +77,6 @@ export class Price extends Fraction {
   }
 
   public toDecimalPlaces(decimalPlaces: number = 8, format?: object, rounding?: Rounding): string {
-    return super.toDecimalPlaces(decimalPlaces, format, rounding)
+    return this.adjusted.toDecimalPlaces(decimalPlaces, format, rounding)
   }
 }
