@@ -81,7 +81,7 @@ export class Price extends Fraction {
   }
 
   public toDecimalPlaces(decimalPlaces?: number, format?: object, rounding?: Rounding): string {
-    const { decimals } = this.baseCurrency
+    const { decimals } = this.quoteCurrency
     if (decimalPlaces) {
       invariant(
         decimalPlaces <= decimals,
@@ -94,7 +94,7 @@ export class Price extends Fraction {
   }
 
   public toExact(format: object = { groupSeparator: '' }): string {
-    Big.DP = this.baseCurrency.decimals
+    Big.DP = this.quoteCurrency.decimals
     return new Big(this.adjusted.numerator.toString()).div(this.adjusted.denominator.toString()).toFormat(format)
   }
 }

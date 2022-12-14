@@ -6,11 +6,11 @@ describe('Price', () => {
   const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'DAI Stablecoin')
   const USDT = new Token(ChainId.MAINNET, '0xdac17f958d2ee523a2206206994597c13d831ec7', 6, 'USDT', 'Tether')
   const daiUsdcPrice = new Price(DAI, USDC, JSBI.BigInt(1000), JSBI.BigInt(1234))
-  const usdtWethPrice = new Price(
-    USDT,
+  const wethUsdcPrice = new Price(
     WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET],
-    JSBI.BigInt(1000000000),
-    JSBI.BigInt(1234567890123456789122)
+    USDT,
+    JSBI.BigInt(13581717750354845263),
+    JSBI.BigInt(18005117135)
   )
 
   describe('#toDecimalPlaces', () => {
@@ -21,16 +21,16 @@ describe('Price', () => {
       expect(daiUsdcPrice.toDecimalPlaces(2)).toEqual('1.23')
     })
     it('should round price to quotient currency', () => {
-      expect(usdtWethPrice.toDecimalPlaces()).toEqual('1.234568')
+      expect(wethUsdcPrice.toDecimalPlaces()).toEqual('1325.687771')
     })
     it('should round price to inverted quotient currency', () => {
-      expect(usdtWethPrice.invert().toDecimalPlaces()).toEqual('0.81000001')
+      expect(wethUsdcPrice.invert().toDecimalPlaces()).toEqual('0.00075433')
     })
     it('should return exact price to inverted quotient currency', () => {
-      expect(usdtWethPrice.invert().toExact()).toEqual('0.810000007290000076')
+      expect(wethUsdcPrice.invert().toExact()).toEqual('0.000754325431404912')
     })
     it('should return exact price to quotient currency', () => {
-      expect(usdtWethPrice.toExact()).toEqual('1.234568')
+      expect(wethUsdcPrice.toExact()).toEqual('1325.687771')
     })
   })
 })
