@@ -1,10 +1,11 @@
 import invariant from 'tiny-invariant'
 import warning from 'tiny-warning'
 import JSBI from 'jsbi'
-import { getAddress } from '@ethersproject/address'
+import { getAddress, isAddress } from '@ethersproject/address'
 import { ZERO, ONE, TWO, THREE, SOLIDITY_TYPE_MAXIMA } from './constants/index'
-import { BigintIsh, SolidityType } from './types'
-
+import { BigintIsh, Chain, ChainId, SolidityType } from './types'
+import { Chains } from 'constants/chains'
+import tronWeb from 'tronweb'
 export function validateSolidityTypeInstance(value: JSBI, solidityType: SolidityType): void {
   invariant(JSBI.greaterThanOrEqual(value, ZERO), `${value} is not a ${solidityType}.`)
   invariant(JSBI.lessThanOrEqual(value, SOLIDITY_TYPE_MAXIMA[solidityType]), `${value} is not a ${solidityType}.`)
@@ -19,6 +20,24 @@ export function validateAndParseAddress(address: string): string {
   } catch (error) {
     invariant(false, `${address} is not a valid address.`)
   }
+}
+
+export function validateEthereumAddress(address: string): boolean {
+  return isAddress(address)
+}
+
+export function validateTronAddress(address: string): boolean {
+  return tronWeb.isAddress(address)
+}
+
+export function isValidAddress(address: string, chainId: ChainId): boolean {
+  if (Chains[chainId] === Chain.ETHEREUM) {
+    return isAddress(address)
+  }
+  if (Chains[chainId] === Chain.TRON) {
+    return tronWeb.isAddress(address)
+  }
+  throw new Error(`Unsupported chainId for validating address. ChainId: ${chainId}, address: ${address}`)
 }
 
 export function parseBigintIsh(bigintIsh: BigintIsh): JSBI {
