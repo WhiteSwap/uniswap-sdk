@@ -37,7 +37,7 @@ export class CurrencyAmount<T extends Currency> extends Fraction {
     return new CurrencyAmount(currency, numerator, denominator)
   }
 
-  protected constructor(currency: T, numerator: BigintIsh, denominator?: BigintIsh) {
+  constructor(currency: T, numerator: BigintIsh, denominator?: BigintIsh) {
     super(numerator, denominator)
     validateSolidityIntegerType(this.quotient, SolidityIntegerType.uint256)
     this.currency = currency

@@ -1,5 +1,4 @@
 export * from './address'
 export * from './math'
-export { parseBigintIsh } from './parseBigintIsh'
 export { sortedInsert } from './sortedInsert'
 export { validateSolidityIntegerType } from './validateSolidityIntegerType'

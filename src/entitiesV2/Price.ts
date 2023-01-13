@@ -5,7 +5,6 @@ import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
 import { MAX_DECIMAL_PLACES } from 'constants/index'
-import { Route } from 'entities/route'
 import { Currency, BigintIsh, Rounding } from 'types'
 
 const Big = toFormat(_Big)
@@ -15,17 +14,6 @@ export class Price<TBase extends Currency, TQuote extends Currency> extends Frac
   public readonly quoteCurrency: TQuote // output i.e. numerator
   public readonly scalar: Fraction // used to adjust the raw fraction w/r/t the decimals of the {base,quote}Token
 
-  public static fromRoute(route: Route): Price<Currency, Currency> {
-    const prices: Price<Currency, Currency>[] = []
-    for (const [i, pair] of route.pairs.entries()) {
-      prices.push(
-        route.path[i].equals(pair.token0)
-          ? new Price(pair.reserve0.currency, pair.reserve1.currency, pair.reserve0.raw, pair.reserve1.raw)
-          : new Price(pair.reserve1.currency, pair.reserve0.currency, pair.reserve1.raw, pair.reserve0.raw)
-      )
-    }
-    return prices.slice(1).reduce((accumulator, currentValue) => accumulator.multiply(currentValue), prices[0])
-  }
   /**
    * Construct a price, either with the base and quote currency amount, or the
    * @param args
