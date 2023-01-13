@@ -1,7 +1,11 @@
 import { ChainId } from 'types'
-import IToken from 'types/Token.interface'
 import { isValidAddress } from 'utils'
 import { AbstractCurrency } from './AbstractCurrency'
+
+interface IToken {
+  readonly address: string
+  equals: (other: Token) => boolean
+}
 
 class Token extends AbstractCurrency implements IToken {
   public readonly address: string

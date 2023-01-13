@@ -1,8 +1,11 @@
 import { WRAPPED_NATIVE_CURRENCY } from '../constants/index'
 import { AbstractCurrency } from './AbstractCurrency'
 import { ChainId } from '../types'
-import INativeCurrency from '../types/NativeCurrency.interface'
 import Token from './Token'
+
+interface INativeCurrency {
+  equals: (other: NativeCurrency) => boolean
+}
 
 export class NativeCurrency extends AbstractCurrency implements INativeCurrency {
   readonly wrappedToken: Token

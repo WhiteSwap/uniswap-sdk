@@ -1,7 +1,3 @@
-import JSBI from 'jsbi'
-
-export type BigintIsh = JSBI | bigint | string
-
 export enum ChainId {
   MAINNET = 1,
   GOERLI = 5,
@@ -22,7 +18,7 @@ export enum Rounding {
   ROUND_UP
 }
 
-export enum SolidityType {
+export enum SolidityIntegerType {
   uint8 = 'uint8',
   uint256 = 'uint256'
 }

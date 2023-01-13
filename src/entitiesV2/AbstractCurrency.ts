@@ -1,6 +1,12 @@
-import IAbstractCurrency from 'types/AbstractCurrency.interface'
 import { ChainId } from '../types'
 
+interface IAbstractCurrency {
+  readonly chainId: ChainId
+  readonly decimals: number
+  readonly symbol: string
+  readonly name: string
+  readonly logoURI?: string
+}
 
 export abstract class AbstractCurrency implements IAbstractCurrency {
   public readonly chainId: ChainId
