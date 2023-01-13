@@ -6,8 +6,7 @@ export {
   INIT_CODE_HASH,
   MINIMUM_LIQUIDITY,
   NATIVE_CURRENCY,
-  WRAPPED_NATIVE_CURRENCY,
-  WETH
+  WRAPPED_NATIVE_CURRENCY
 } from './constants/index'
 export * from './types'
 export * from './entities'

@@ -10,7 +10,7 @@ import {
   Trade,
   TradeType,
   WRAPPED_NATIVE_CURRENCY,
-  NATIVE_CURRENCY,
+  NATIVE_CURRENCY
 } from '../src'
 
 describe('Trade', () => {

@@ -10,7 +10,7 @@ import {
   TokenAmount,
   Trade,
   NATIVE_CURRENCY,
-  WRAPPED_NATIVE_CURRENCY,
+  WRAPPED_NATIVE_CURRENCY
 } from '../src'
 
 import JSBI from 'jsbi'
@@ -43,11 +43,11 @@ describe('Router', () => {
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
-        expect(result.methodName).toEqual('swapExactETHForTokens')
+        expect(result.methodName).toEqual('swapExactNativeForTokens')
         expect(result.args.slice(0, -1)).toEqual([
           '0x51',
           [WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address, token0.address, token1.address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x64')
         checkDeadline(result.args[result.args.length - 1])
@@ -62,15 +62,15 @@ describe('Router', () => {
           {
             deadline: 50,
             recipient: '0x0000000000000000000000000000000000000004',
-            allowedSlippage: new Percent('1', '100'),
+            allowedSlippage: new Percent('1', '100')
           }
         )
-        expect(result.methodName).toEqual('swapExactETHForTokens')
+        expect(result.methodName).toEqual('swapExactNativeForTokens')
         expect(result.args).toEqual([
           '0x51',
           [WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address, token0.address, token1.address],
           '0x0000000000000000000000000000000000000004',
-          '0x32',
+          '0x32'
         ])
         expect(result.value).toEqual('0x64')
       })
@@ -83,12 +83,12 @@ describe('Router', () => {
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
-        expect(result.methodName).toEqual('swapExactTokensForETH')
+        expect(result.methodName).toEqual('swapExactTokensForNative')
         expect(result.args.slice(0, -1)).toEqual([
           '0x64',
           '0x51',
           [token1.address, token0.address, WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
@@ -103,7 +103,7 @@ describe('Router', () => {
           '0x64',
           '0x59',
           [token0.address, token1.address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
@@ -118,11 +118,11 @@ describe('Router', () => {
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
-        expect(result.methodName).toEqual('swapETHForExactTokens')
+        expect(result.methodName).toEqual('swapNativeForExactTokens')
         expect(result.args.slice(0, -1)).toEqual([
           '0x64',
           [WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address, token0.address, token1.address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x80')
         checkDeadline(result.args[result.args.length - 1])
@@ -135,12 +135,12 @@ describe('Router', () => {
           ),
           { ttl: 50, recipient: '0x0000000000000000000000000000000000000004', allowedSlippage: new Percent('1', '100') }
         )
-        expect(result.methodName).toEqual('swapTokensForExactETH')
+        expect(result.methodName).toEqual('swapTokensForExactNative')
         expect(result.args.slice(0, -1)).toEqual([
           '0x64',
           '0x80',
           [token1.address, token0.address, WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
@@ -155,7 +155,7 @@ describe('Router', () => {
           '0x64',
           '0x71',
           [token0.address, token1.address],
-          '0x0000000000000000000000000000000000000004',
+          '0x0000000000000000000000000000000000000004'
         ])
         expect(result.value).toEqual('0x0')
         checkDeadline(result.args[result.args.length - 1])
@@ -173,14 +173,14 @@ describe('Router', () => {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
               allowedSlippage: new Percent('1', '100'),
-              feeOnTransfer: true,
+              feeOnTransfer: true
             }
           )
-          expect(result.methodName).toEqual('swapExactETHForTokensSupportingFeeOnTransferTokens')
+          expect(result.methodName).toEqual('swapExactNativeForTokensSupportingFeeOnTransferTokens')
           expect(result.args.slice(0, -1)).toEqual([
             '0x51',
             [WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address, token0.address, token1.address],
-            '0x0000000000000000000000000000000000000004',
+            '0x0000000000000000000000000000000000000004'
           ])
           expect(result.value).toEqual('0x64')
           checkDeadline(result.args[result.args.length - 1])
@@ -195,15 +195,15 @@ describe('Router', () => {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
               allowedSlippage: new Percent('1', '100'),
-              feeOnTransfer: true,
+              feeOnTransfer: true
             }
           )
-          expect(result.methodName).toEqual('swapExactTokensForETHSupportingFeeOnTransferTokens')
+          expect(result.methodName).toEqual('swapExactTokensForNativeSupportingFeeOnTransferTokens')
           expect(result.args.slice(0, -1)).toEqual([
             '0x64',
             '0x51',
             [token1.address, token0.address, WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET].address],
-            '0x0000000000000000000000000000000000000004',
+            '0x0000000000000000000000000000000000000004'
           ])
           expect(result.value).toEqual('0x0')
           checkDeadline(result.args[result.args.length - 1])
@@ -215,7 +215,7 @@ describe('Router', () => {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
               allowedSlippage: new Percent('1', '100'),
-              feeOnTransfer: true,
+              feeOnTransfer: true
             }
           )
           expect(result.methodName).toEqual('swapExactTokensForTokensSupportingFeeOnTransferTokens')
@@ -223,7 +223,7 @@ describe('Router', () => {
             '0x64',
             '0x59',
             [token0.address, token1.address],
-            '0x0000000000000000000000000000000000000004',
+            '0x0000000000000000000000000000000000000004'
           ])
           expect(result.value).toEqual('0x0')
           checkDeadline(result.args[result.args.length - 1])
@@ -241,7 +241,7 @@ describe('Router', () => {
                 ttl: 50,
                 recipient: '0x0000000000000000000000000000000000000004',
                 allowedSlippage: new Percent('1', '100'),
-                feeOnTransfer: true,
+                feeOnTransfer: true
               }
             )
           ).toThrow('EXACT_OUT_FOT')
@@ -257,7 +257,7 @@ describe('Router', () => {
                 ttl: 50,
                 recipient: '0x0000000000000000000000000000000000000004',
                 allowedSlippage: new Percent('1', '100'),
-                feeOnTransfer: true,
+                feeOnTransfer: true
               }
             )
           ).toThrow('EXACT_OUT_FOT')
@@ -270,7 +270,7 @@ describe('Router', () => {
                 ttl: 50,
                 recipient: '0x0000000000000000000000000000000000000004',
                 allowedSlippage: new Percent('1', '100'),
-                feeOnTransfer: true,
+                feeOnTransfer: true
               }
             )
           ).toThrow('EXACT_OUT_FOT')

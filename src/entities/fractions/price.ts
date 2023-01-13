@@ -5,9 +5,13 @@ import { TokenAmount } from './tokenAmount'
 import { Fraction } from './fraction'
 import { CurrencyAmount } from './currencyAmount'
 import invariant from 'tiny-invariant'
+import toFormat from 'toformat'
 import JSBI from 'jsbi'
-import { NATIVE_CURRENCY, TEN } from '../../constants/index'
+import _Big from 'big.js'
+import { MAX_DECIMAL_PLACES, NATIVE_CURRENCY, TEN } from '../../constants/index'
 import { BigintIsh, Rounding } from '../../types'
+
+const Big = toFormat(_Big)
 
 export class Price extends Fraction {
   public readonly baseCurrency: Currency // input i.e. denominator
@@ -74,5 +78,23 @@ export class Price extends Fraction {
 
   public toFixed(decimalPlaces: number = 4, format?: object, rounding?: Rounding): string {
     return this.adjusted.toFixed(decimalPlaces, format, rounding)
+  }
+
+  public toDecimalPlaces(decimalPlaces?: number, format?: object, rounding?: Rounding): string {
+    const { decimals } = this.quoteCurrency
+    if (decimalPlaces) {
+      invariant(
+        decimalPlaces <= decimals,
+        `decimalsPlaces param must be less or equal to token decimals. Received: ${decimalPlaces}, currency decimals: ${decimals}`
+      )
+    }
+    const defaultDecimalsPlaces = decimals < MAX_DECIMAL_PLACES ? decimals : MAX_DECIMAL_PLACES
+
+    return this.adjusted.toDecimalPlaces(decimalPlaces ?? defaultDecimalsPlaces, format, rounding)
+  }
+
+  public toExact(format: object = { groupSeparator: '' }): string {
+    Big.DP = this.quoteCurrency.decimals
+    return new Big(this.adjusted.numerator.toString()).div(this.adjusted.denominator.toString()).toFormat(format)
   }
 }

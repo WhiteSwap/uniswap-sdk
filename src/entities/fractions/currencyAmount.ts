@@ -6,7 +6,7 @@ import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
-import { TEN } from '../../constants/index'
+import { MAX_DECIMAL_PLACES, TEN } from '../../constants/index'
 import { parseBigintIsh, validateSolidityTypeInstance } from '../../utils'
 import { BigintIsh, Rounding, SolidityType } from '../../types'
 
@@ -66,5 +66,18 @@ export class CurrencyAmount extends Fraction {
   public toExact(format: object = { groupSeparator: '' }): string {
     Big.DP = this.currency.decimals
     return new Big(this.numerator.toString()).div(this.denominator.toString()).toFormat(format)
+  }
+
+  public toDecimalPlaces(decimals?: number, format?: object, rounding: Rounding = Rounding.ROUND_DOWN): string {
+    if (decimals) {
+      invariant(
+        decimals <= this.currency.decimals,
+        `decimalsPlaces param must be less or equal to token decimals. Received: ${decimals}, currency decimals: ${this.currency.decimals}`
+      )
+    }
+    const defaultDecimalsPlaces =
+      this.currency.decimals < MAX_DECIMAL_PLACES ? this.currency.decimals : MAX_DECIMAL_PLACES
+
+    return super.toDecimalPlaces(decimals ?? defaultDecimalsPlaces, format, rounding)
   }
 }

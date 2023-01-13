@@ -1,7 +1,6 @@
 import { isAddress, getAddress } from '@ethersproject/address'
 import { Chains } from 'constants/chains'
 import invariant from 'tiny-invariant'
-import warning from 'tiny-warning'
 import { ChainId, Chain } from 'types'
 import tronWeb from 'tronweb'
 
@@ -19,7 +18,6 @@ export function isValidAddress(address: string, chainId: ChainId): boolean {
 export function validateAndParseAddress(address: string): string {
   try {
     const checksummedAddress = getAddress(address)
-    warning(address === checksummedAddress, `${address} is not checksummed.`)
     return checksummedAddress
   } catch (error) {
     invariant(false, `${address} is not a valid address.`)
