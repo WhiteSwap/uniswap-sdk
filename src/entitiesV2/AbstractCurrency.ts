@@ -1,4 +1,4 @@
-import { ChainId } from '../types'
+import { ChainId, Currency } from '../types'
 
 interface IAbstractCurrency {
   readonly chainId: ChainId
@@ -64,5 +64,5 @@ export abstract class AbstractCurrency implements IAbstractCurrency {
     this.logoURI = logoURI
   }
 
-  protected abstract equals(other: AbstractCurrency): boolean
+  protected abstract equals(other: Currency): boolean
 }

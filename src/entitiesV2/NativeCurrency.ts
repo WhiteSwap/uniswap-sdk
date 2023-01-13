@@ -1,6 +1,6 @@
 import { WRAPPED_NATIVE_CURRENCY } from '../constants/index'
 import { AbstractCurrency } from './AbstractCurrency'
-import { ChainId } from '../types'
+import { ChainId, Currency } from '../types'
 import { Token } from './Token'
 
 interface INativeCurrency {
@@ -22,7 +22,7 @@ export class NativeCurrency extends AbstractCurrency implements INativeCurrency 
     this.wrappedToken = wrappedToken
   }
 
-  public equals(other: NativeCurrency): boolean {
+  public equals(other: Currency): boolean {
     return other instanceof NativeCurrency && other.chainId === this.chainId
   }
 }

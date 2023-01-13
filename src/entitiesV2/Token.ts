@@ -1,4 +1,4 @@
-import { ChainId } from 'types'
+import { ChainId, Currency } from 'types'
 import { isValidAddress } from 'utils'
 import { AbstractCurrency } from './AbstractCurrency'
 
@@ -22,7 +22,7 @@ export class Token extends AbstractCurrency implements IToken {
     }
   }
 
-  public equals(other: Token): boolean {
+  public equals(other: Currency): boolean {
     return other instanceof Token && other.chainId === this.chainId && other.address === this.address
   }
 
