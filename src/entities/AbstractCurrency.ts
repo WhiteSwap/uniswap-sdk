@@ -26,7 +26,7 @@ export abstract class AbstractCurrency implements IAbstractCurrency {
     if (Number.isNaN(Number(decimals)) || !Number.isInteger(decimals)) {
       throw new Error('Decimals value is invalid. Decimals should be a integer number')
     }
-    if (decimals <= 0 || decimals > 255) {
+    if (decimals < 0 || decimals > 255) {
       throw new Error(`Decimals should be greater than 0 and less than 255`)
     }
     /*--- symbol validation ---*/
