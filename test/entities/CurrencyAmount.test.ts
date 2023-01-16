@@ -117,7 +117,7 @@ describe('CurrencyAmount', () => {
       expect(amount.toDecimalPlaces()).toEqual('123456')
     })
     it('is correct for 18 decimals', () => {
-      const amount = CurrencyAmount.fromRawAmount(token, 1234567890123456789012345)
+    const amount = CurrencyAmount.fromRawAmount(token, 1234567890123456789012345)
       expect(amount.toDecimalPlaces()).toEqual('1234567.89012345')
     })
   })

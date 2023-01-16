@@ -38,6 +38,6 @@ export class Percent extends Fraction {
   }
 
   public toDecimalPlaces(decimalPlaces: number = 2, format?: object, rounding?: Rounding): string {
-    return this.multiply(ONE_HUNDRED).toDecimalPlaces(decimalPlaces, format, rounding)
+    return super.multiply(ONE_HUNDRED).toDecimalPlaces(decimalPlaces, format, rounding)
   }
 }

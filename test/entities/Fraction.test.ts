@@ -9,6 +9,9 @@ describe('Fraction', () => {
     it('should fail to create instance with invalid numbers', () => {
       expect(() => new Fraction('testNum', 'testNum')).toThrowError('Cannot convert testNum to a BigInt')
     })
+    it('should set denominator to 1 if no value provided', () => {
+      expect(new Fraction(1)).toEqual(new Fraction(1, 1))
+    })
   })
   describe('#quotient', () => {
     it('should return correct quotient after floor division', () => {
