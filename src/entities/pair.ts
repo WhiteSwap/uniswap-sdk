@@ -1,45 +1,32 @@
 // TODO: remove
-// @ts-nocheck
-import { getCreate2Address } from '@ethersproject/address'
-import { keccak256, pack } from '@ethersproject/solidity'
-import { FACTORY_ADDRESS, INIT_CODE_HASH, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE } from '../constants/index'
+import { FACTORY_ADDRESS, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE } from '../constants/index'
 import { InsufficientReservesError, InsufficientInputAmountError } from '../error'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
 import { ChainId, BigintIsh } from '../types'
-import { sqrt } from '../utils'
+import { computePairAddress, sqrt } from '../utils'
 import { CurrencyAmount } from './CurrencyAmount'
 import { Price } from './Price'
 import { Token } from './Token'
-
-let PAIR_ADDRESS_CACHE: { [token0Address: string]: { [token1Address: string]: string } } = {}
 
 export class Pair {
   public readonly liquidityToken: Token
   private readonly tokenAmounts: CurrencyAmount<Token>[]
 
+  // TODO: remove
   public static getAddress(tokenA: Token, tokenB: Token): string {
-    const tokens = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
-
-    if (PAIR_ADDRESS_CACHE?.[tokens[0].address]?.[tokens[1].address] === undefined) {
-      PAIR_ADDRESS_CACHE = {
-        ...PAIR_ADDRESS_CACHE,
-        [tokens[0].address]: {
-          ...PAIR_ADDRESS_CACHE?.[tokens[0].address],
-          [tokens[1].address]: getCreate2Address(
-            FACTORY_ADDRESS[tokens[0].chainId],
-            keccak256(['bytes'], [pack(['address', 'address'], [tokens[0].address, tokens[1].address])]),
-            INIT_CODE_HASH[tokens[0].chainId]
-          )
-        }
-      }
-    }
-
-    return PAIR_ADDRESS_CACHE[tokens[0].address][tokens[1].address]
+    return computePairAddress({
+      factoryAddress: FACTORY_ADDRESS[tokenA.chainId],
+      tokenA,
+      tokenB
+    })
   }
 
   public constructor(tokenAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {
-    const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
+    if (tokenAmountA.currency.chainId !== tokenAmountB.currency.chainId) {
+      throw new Error('Pair cannot be created with different chainIds')
+    }
+     const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [tokenAmountA, tokenAmountB]
       : [tokenAmountB, tokenAmountA]
     this.liquidityToken = new Token(
