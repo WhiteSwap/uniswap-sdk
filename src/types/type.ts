@@ -1,4 +1,4 @@
-import { NativeCurrency, Token } from 'entitiesV2'
+import { NativeCurrency, Token } from 'entities'
 import JSBI from 'jsbi'
 
 export type BigintIsh = JSBI | number | string | boolean | object

@@ -1,6 +1,6 @@
-import { ZERO, THREE, TWO, ONE } from 'constants/index'
+import { ZERO, THREE, TWO, ONE } from '../constants/index'
 import JSBI from 'jsbi'
-import { SolidityIntegerType } from 'types'
+import { SolidityIntegerType } from '../types'
 import { validateSolidityIntegerType } from './validateSolidityIntegerType'
 
 // mock the on-chain sqrt function

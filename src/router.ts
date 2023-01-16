@@ -1,4 +1,4 @@
-import { TradeType } from './types'
+import { Currency, TradeType } from './types'
 import invariant from 'tiny-invariant'
 import { validateAndParseAddress } from './utils'
 import { CurrencyAmount, Percent, Trade } from './entities'
@@ -54,7 +54,7 @@ export interface SwapParameters {
   value: string
 }
 
-function toHex(currencyAmount: CurrencyAmount) {
+function toHex(currencyAmount: CurrencyAmount<Currency>) {
   return `0x${currencyAmount.raw.toString(16)}`
 }
 
@@ -73,7 +73,10 @@ export abstract class Router {
    * @param trade to produce call parameters for
    * @param options options for the call parameters
    */
-  public static swapCallParameters(trade: Trade, options: TradeOptions | TradeOptionsDeadline): SwapParameters {
+  public static swapCallParameters(
+    trade: Trade<Currency, Currency, TradeType>,
+    options: TradeOptions | TradeOptionsDeadline
+  ): SwapParameters {
     const nativeCurrencyIn = trade.inputAmount.currency.isNative
     const nativeCurrencyOut = trade.outputAmount.currency.isNative
     // the router does not support both ether in and out

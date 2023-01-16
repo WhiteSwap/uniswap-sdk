@@ -1,17 +1,7 @@
-import { ChainId } from '../types'
-import { NativeCurrency, Currency } from '../entities'
-import Token from 'entitiesV2/Token'
+import { ChainId, Currency } from '../types'
+import { Token, NativeCurrency } from '../entities'
 
 type Currencies<T extends Currency> = { [chainId in ChainId]: T }
-
-export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
-  [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
-  [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
-  [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
-  [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
-  [ChainId.MAINNET_TRON_GRID]: new NativeCurrency(ChainId.MAINNET_TRON_GRID, 6, 'TRX', 'TRX'),
-  [ChainId.TESTNET_SHASTA]: new NativeCurrency(ChainId.TESTNET_SHASTA, 6, 'TRX', 'TRX')
-}
 
 export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
   [ChainId.MAINNET]: new Token(
@@ -71,4 +61,13 @@ export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
     'WTRX',
     'Wrapped TRX'
   )
+}
+
+export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
+  [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
+  [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
+  [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
+  [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
+  [ChainId.MAINNET_TRON_GRID]: new NativeCurrency(ChainId.MAINNET_TRON_GRID, 6, 'TRX', 'TRX'),
+  [ChainId.TESTNET_SHASTA]: new NativeCurrency(ChainId.TESTNET_SHASTA, 6, 'TRX', 'TRX')
 }

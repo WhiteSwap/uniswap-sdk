@@ -1,5 +1,5 @@
-import { Token } from 'entitiesV2'
-import { Currency } from 'types'
+import { Token } from '../entities'
+import { Currency } from '../types'
 
 /**
  * Compares two currencies for equality

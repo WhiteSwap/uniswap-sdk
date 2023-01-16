@@ -1,7 +1,7 @@
 import { isAddress, getAddress } from '@ethersproject/address'
-import { Chains } from 'constants/chains'
+import { Chains } from '../constants/chains'
 import invariant from 'tiny-invariant'
-import { ChainId, Chain } from 'types'
+import { ChainId, Chain } from '../types'
 import tronWeb from 'tronweb'
 
 export function isValidAddress(address: string, chainId: ChainId): boolean {

@@ -1,25 +1,27 @@
-import { WRAPPED_NATIVE_CURRENCY } from '../constants/index'
-import { BaseCurrency } from './baseCurrency'
-import { Token } from './token'
-import { Currency } from './currency'
-import invariant from 'tiny-invariant'
-import { ChainId } from '../types'
+import { WRAPPED_NATIVE_CURRENCY } from '../constants/currencies'
+import { AbstractCurrency } from './AbstractCurrency'
+import { ChainId, Currency } from '../types'
+import { Token } from './Token'
 
-export class NativeCurrency extends BaseCurrency {
-  public readonly isNative: true = true
-  public readonly isToken: false = false
+interface INativeCurrency {
+  equals: (other: NativeCurrency) => boolean
+}
 
-  public constructor(chainId: ChainId, decimals: number, symbol?: string, name?: string) {
-    super(chainId, decimals, symbol, name)
-  }
+export class NativeCurrency extends AbstractCurrency implements INativeCurrency {
+  public readonly wrappedToken: Token
+  public readonly isNative = true
 
-  public get wrapped(): Token {
-    const wnc = WRAPPED_NATIVE_CURRENCY[this.chainId]
-    invariant(!!wnc, 'WRAPPED')
-    return wnc
+  constructor(chainId: ChainId, decimals: number, symbol: string, name: string, logoURI?: string) {
+    super(chainId, decimals, symbol, name, logoURI)
+    const wrappedToken = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    if (!wrappedToken) {
+      throw new Error(`Wrapped currency doesn't exist for ${this.symbol} and ${this.chainId}`)
+    }
+
+    this.wrappedToken = wrappedToken
   }
 
   public equals(other: Currency): boolean {
-    return other.isNative && other.chainId === this.chainId
+    return other instanceof NativeCurrency && other.chainId === this.chainId
   }
 }

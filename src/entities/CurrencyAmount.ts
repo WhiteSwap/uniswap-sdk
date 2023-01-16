@@ -1,12 +1,12 @@
 import _Big from 'big.js'
-import { Token } from 'entitiesV2/Token'
+import { Token } from './Token'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
-import { Currency, BigintIsh, Rounding, SolidityIntegerType } from 'types'
-import { validateSolidityIntegerType } from 'utils'
+import { Currency, BigintIsh, Rounding, SolidityIntegerType } from '../types'
+import { validateSolidityIntegerType } from '../utils'
 import { Fraction } from './Fraction'
 import toFormat from 'toformat'
-import { MAX_DECIMAL_PLACES } from 'constants/index'
+import { MAX_DECIMAL_PLACES } from '../constants/index'
 
 const Big = toFormat(_Big)
 
@@ -110,6 +110,7 @@ export class CurrencyAmount<T extends Currency> extends Fraction {
     if (this.currency instanceof Token) {
       return this as CurrencyAmount<Token>
     }
+    //@ts-ignore
     return CurrencyAmount.fromFractionalAmount(this.currency.wrappedToken, this.numerator, this.denominator)
   }
 }

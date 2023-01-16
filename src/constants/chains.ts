@@ -1,4 +1,4 @@
-import { Chain, ChainId } from 'types'
+import { Chain, ChainId } from '../types'
 
 export const Chains: Record<ChainId, Chain> = {
   [ChainId.MAINNET]: Chain.ETHEREUM,

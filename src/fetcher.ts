@@ -1,9 +1,8 @@
 import { Contract } from '@ethersproject/contracts'
 import { getNetwork } from '@ethersproject/networks'
 import { getDefaultProvider } from '@ethersproject/providers'
-import { TokenAmount } from './entities/fractions'
-import { Pair, Token } from './entities'
 import IUniswapV2Pair from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import { Token, Pair, CurrencyAmount } from './entities'
 import invariant from 'tiny-invariant'
 import ERC20 from './abis/ERC20.json'
 import { ChainId } from './types'
@@ -35,8 +34,8 @@ export abstract class Fetcher {
     chainId: ChainId,
     address: string,
     provider = getDefaultProvider(getNetwork(chainId)),
-    symbol?: string,
-    name?: string
+    symbol: string,
+    name: string
   ): Promise<Token> {
     const parsedDecimals =
       typeof TOKEN_DECIMALS_CACHE?.[chainId]?.[address] === 'number'
@@ -69,6 +68,6 @@ export abstract class Fetcher {
     const address = Pair.getAddress(tokenA, tokenB)
     const [reserves0, reserves1] = await new Contract(address, IUniswapV2Pair.abi, provider).getReserves()
     const balances = tokenA.sortsBefore(tokenB) ? [reserves0, reserves1] : [reserves1, reserves0]
-    return new Pair(new TokenAmount(tokenA, balances[0]), new TokenAmount(tokenB, balances[1]))
+    return new Pair(new CurrencyAmount(tokenA, balances[0]), new CurrencyAmount(tokenB, balances[1]))
   }
 }

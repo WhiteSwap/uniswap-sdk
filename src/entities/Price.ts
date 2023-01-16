@@ -4,8 +4,8 @@ import invariant from 'tiny-invariant'
 import JSBI from 'jsbi'
 import _Big from 'big.js'
 import toFormat from 'toformat'
-import { MAX_DECIMAL_PLACES } from 'constants/index'
-import { Currency, BigintIsh, Rounding } from 'types'
+import { MAX_DECIMAL_PLACES } from '../constants/index'
+import { Currency, BigintIsh, Rounding } from '../types'
 
 const Big = toFormat(_Big)
 

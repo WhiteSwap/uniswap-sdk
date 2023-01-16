@@ -1,7 +1,7 @@
-import { SOLIDITY_INTEGER_TYPE_MAXIMA, ZERO } from 'constants/index'
+import { SOLIDITY_INTEGER_TYPE_MAXIMA, ZERO } from '../constants/index'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
-import { SolidityIntegerType } from 'types'
+import { SolidityIntegerType } from '../types'
 
 export function validateSolidityIntegerType(value: JSBI, solidityType: SolidityIntegerType): void {
   invariant(JSBI.greaterThanOrEqual(value, ZERO), `${value} is not a ${solidityType}.`)

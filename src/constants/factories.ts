@@ -1,4 +1,4 @@
-import { ChainId } from 'types'
+import { ChainId } from '../types'
 
 export const FACTORY_ADDRESS: Record<ChainId, string> = {
   [ChainId.MAINNET]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',

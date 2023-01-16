@@ -1,43 +1,36 @@
-import invariant from 'tiny-invariant'
-import { validateAndParseAddress } from '../utils'
-import { Currency } from './currency'
-import { BaseCurrency } from './baseCurrency'
-import { ChainId } from '../types'
+import { ChainId, Currency } from '../types'
+import { isValidAddress } from '../utils'
+import { AbstractCurrency } from './AbstractCurrency'
 
-export class Token extends BaseCurrency {
-  public readonly isNative: false = false
-  public readonly isToken: true = true
+interface IToken {
+  readonly address: string
+  equals: (other: Token) => boolean
+  sortsBefore: (other: Token) => boolean
+}
 
+export class Token extends AbstractCurrency implements IToken {
+  public isNative = false
   public readonly address: string
 
-  public constructor(chainId: ChainId, address: string, decimals: number, symbol?: string, name?: string) {
-    super(chainId, decimals, symbol, name)
-    this.address = validateAndParseAddress(address)
+  constructor(chainId: ChainId, address: string, decimals: number, symbol: string, name: string, logoURI?: string) {
+    super(chainId, decimals, symbol, name, logoURI)
+
+    if (!isValidAddress(address, chainId)) {
+      throw new Error(`Address: ${address} is invalid for chainId: ${chainId}`)
+    }
+    this.address = address
   }
 
   public equals(other: Currency): boolean {
-    return other.isToken && this.chainId === other.chainId && this.address === other.address
+    return other instanceof Token && other.chainId === this.chainId && other.address === this.address
   }
 
+  // TODO: remove from public methods
   public sortsBefore(other: Token): boolean {
-    invariant(this.chainId === other.chainId, 'CHAIN_IDS')
-    invariant(this.address !== other.address, 'ADDRESSES')
+    if (this.equals(other)) {
+      throw new Error('Tokens are equal. Cannot sort')
+    }
+
     return this.address.toLowerCase() < other.address.toLowerCase()
-  }
-
-  public get wrapped(): Token {
-    return this
-  }
-}
-
-export function currencyEquals(currencyA: Currency, currencyB: Currency): boolean {
-  if (currencyA instanceof Token && currencyB instanceof Token) {
-    return currencyA.equals(currencyB)
-  } else if (currencyA instanceof Token) {
-    return false
-  } else if (currencyB instanceof Token) {
-    return false
-  } else {
-    return currencyA.equals(currencyB)
   }
 }
