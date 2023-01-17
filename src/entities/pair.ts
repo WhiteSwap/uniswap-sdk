@@ -198,9 +198,6 @@ export class Pair {
       }
     }
 
-    return new CurrencyAmount(
-      token,
-      JSBI.divide(JSBI.multiply(liquidity.raw, this.reserveOf(token).raw), totalSupplyAdjusted.raw)
-    )
+    return new CurrencyAmount(token, JSBI.divide(JSBI.multiply(liquidity.raw, this.reserveOf(token).raw), totalSupplyAdjusted.raw))
   }
 }

@@ -16,10 +16,12 @@
   "module": "dist/sdk.esm.js",
   "scripts": {
     "lint": "tsdx lint src test",
+    "lint:fix": "tsdx lint src test --fix",
     "build": "tsdx build",
     "start": "tsdx watch",
     "test": "tsdx test --no-cache",
     "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage",
     "prepublishOnly": "tsdx build"
   },
   "dependencies": {
@@ -54,8 +56,13 @@
     "node": ">=10"
   },
   "prettier": {
-    "printWidth": 120,
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "printWidth": 140,
+    "arrowParens": "avoid",
+    "tabWidth": 2,
+    "quoteProps": "consistent",
+    "trailingComma": "none",
+    "bracketSpacing": true
   }
 }

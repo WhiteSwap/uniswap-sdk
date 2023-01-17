@@ -88,9 +88,7 @@ export abstract class Router {
     const amountOut: string = toHex(trade.minimumAmountOut(options.allowedSlippage))
     const path: string[] = trade.route.path.map(token => token.address)
     const deadline =
-      'ttl' in options
-        ? `0x${(Math.floor(new Date().getTime() / 1000) + options.ttl).toString(16)}`
-        : `0x${options.deadline.toString(16)}`
+      'ttl' in options ? `0x${(Math.floor(new Date().getTime() / 1000) + options.ttl).toString(16)}` : `0x${options.deadline.toString(16)}`
 
     const useFeeOnTransfer = Boolean(options.feeOnTransfer)
 
@@ -100,23 +98,17 @@ export abstract class Router {
     switch (trade.tradeType) {
       case TradeType.EXACT_INPUT:
         if (nativeCurrencyIn) {
-          methodName = useFeeOnTransfer
-            ? 'swapExactNativeForTokensSupportingFeeOnTransferTokens'
-            : 'swapExactNativeForTokens'
+          methodName = useFeeOnTransfer ? 'swapExactNativeForTokensSupportingFeeOnTransferTokens' : 'swapExactNativeForTokens'
           // (uint amountOutMin, address[] calldata path, address to, uint deadline)
           args = [amountOut, path, to, deadline]
           value = amountIn
         } else if (nativeCurrencyOut) {
-          methodName = useFeeOnTransfer
-            ? 'swapExactTokensForNativeSupportingFeeOnTransferTokens'
-            : 'swapExactTokensForNative'
+          methodName = useFeeOnTransfer ? 'swapExactTokensForNativeSupportingFeeOnTransferTokens' : 'swapExactTokensForNative'
           // (uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
           args = [amountIn, amountOut, path, to, deadline]
           value = ZERO_HEX
         } else {
-          methodName = useFeeOnTransfer
-            ? 'swapExactTokensForTokensSupportingFeeOnTransferTokens'
-            : 'swapExactTokensForTokens'
+          methodName = useFeeOnTransfer ? 'swapExactTokensForTokensSupportingFeeOnTransferTokens' : 'swapExactTokensForTokens'
           // (uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
           args = [amountIn, amountOut, path, to, deadline]
           value = ZERO_HEX

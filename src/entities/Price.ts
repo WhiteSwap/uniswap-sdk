@@ -87,8 +87,6 @@ export class Price<TBase extends Currency, TQuote extends Currency> extends Frac
 
   public toExact(format: object = { groupSeparator: '' }): string {
     Big.DP = this.quoteCurrency.decimals
-    return new Big(this.adjustedForDecimals.numerator.toString())
-      .div(this.adjustedForDecimals.denominator.toString())
-      .toFormat(format)
+    return new Big(this.adjustedForDecimals.numerator.toString()).div(this.adjustedForDecimals.denominator.toString()).toFormat(format)
   }
 }

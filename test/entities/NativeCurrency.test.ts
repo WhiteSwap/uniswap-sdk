@@ -21,26 +21,12 @@ describe('NativeCurrency', () => {
     })
     it('should fail with unsupported chainId', () => {
       expect(
-        () =>
-          new NativeCurrency(
-            23,
-            6,
-            'TRX',
-            'TRX',
-            'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png'
-          )
+        () => new NativeCurrency(23, 6, 'TRX', 'TRX', 'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png')
       ).toThrow(`Wrapped currency doesn't exist for TRX and 23`)
     })
     it('should fail with invalid chainId', () => {
       expect(
-        () =>
-          new NativeCurrency(
-            23.5,
-            6,
-            'TRX',
-            'TRX',
-            'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png'
-          )
+        () => new NativeCurrency(23.5, 6, 'TRX', 'TRX', 'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png')
       ).toThrow('Chain id must be a positive integer')
     })
     it('should fail with non-integer decimals', () => {
@@ -152,9 +138,7 @@ describe('NativeCurrency', () => {
       ).toThrow('Min name length is 1')
     })
     it('should fail with invalid url', () => {
-      expect(() => new NativeCurrency(ChainId.MAINNET, 1, 'TRX', 'TRX', 'invalidUrl')).toThrow(
-        'Invalid URL: invalidUrl'
-      )
+      expect(() => new NativeCurrency(ChainId.MAINNET, 1, 'TRX', 'TRX', 'invalidUrl')).toThrow('Invalid URL: invalidUrl')
     })
   })
   describe('#equals', () => {

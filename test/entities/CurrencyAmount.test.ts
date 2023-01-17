@@ -1,12 +1,4 @@
-import {
-  CurrencyAmount,
-  Percent,
-  Token,
-  ChainId,
-  NATIVE_CURRENCY,
-  SOLIDITY_INTEGER_TYPE_MAXIMA,
-  WRAPPED_NATIVE_CURRENCY
-} from '../../src'
+import { CurrencyAmount, Percent, Token, ChainId, NATIVE_CURRENCY, SOLIDITY_INTEGER_TYPE_MAXIMA, WRAPPED_NATIVE_CURRENCY } from '../../src'
 import JSBI from 'jsbi'
 
 describe('CurrencyAmount', () => {
@@ -40,9 +32,7 @@ describe('CurrencyAmount', () => {
   })
 
   it('token amount cannot exceed max uint256', () => {
-    expect(() =>
-      CurrencyAmount.fromRawAmount(token, JSBI.add(SOLIDITY_INTEGER_TYPE_MAXIMA.uint256, JSBI.BigInt(1)))
-    ).toThrow()
+    expect(() => CurrencyAmount.fromRawAmount(token, JSBI.add(SOLIDITY_INTEGER_TYPE_MAXIMA.uint256, JSBI.BigInt(1)))).toThrow()
   })
   it('token amount quotient cannot exceed max uint256', () => {
     expect(() =>
@@ -58,11 +48,7 @@ describe('CurrencyAmount', () => {
     expect(amount.quotient).toEqual(SOLIDITY_INTEGER_TYPE_MAXIMA.uint256)
   })
   it('token amount numerator can be greater uint256 if denominator is greater 1', () => {
-    const amount = CurrencyAmount.fromFractionalAmount(
-      token,
-      JSBI.add(SOLIDITY_INTEGER_TYPE_MAXIMA.uint256, JSBI.BigInt(2)),
-      2
-    )
+    const amount = CurrencyAmount.fromFractionalAmount(token, JSBI.add(SOLIDITY_INTEGER_TYPE_MAXIMA.uint256, JSBI.BigInt(2)), 2)
     expect(amount.numerator).toEqual(JSBI.add(JSBI.BigInt(2), SOLIDITY_INTEGER_TYPE_MAXIMA.uint256))
   })
 
@@ -132,9 +118,7 @@ describe('CurrencyAmount', () => {
     })
     it('should return wrapped amount for native currency', () => {
       const amount = CurrencyAmount.fromRawAmount(NATIVE_CURRENCY[ChainId.MAINNET], 1000)
-      expect(amount.wrapped).toEqual(
-        CurrencyAmount.fromFractionalAmount(WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET], 1000, 1)
-      )
+      expect(amount.wrapped).toEqual(CurrencyAmount.fromFractionalAmount(WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET], 1000, 1))
     })
   })
 })

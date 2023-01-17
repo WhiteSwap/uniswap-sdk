@@ -177,11 +177,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         tokenAmounts[i - 1] = inputAmount
         nextPairs[i - 1] = nextPair
       }
-      this.inputAmount = CurrencyAmount.fromFractionalAmount(
-        route.input,
-        tokenAmounts[0].numerator,
-        tokenAmounts[0].denominator
-      )
+      this.inputAmount = CurrencyAmount.fromFractionalAmount(route.input, tokenAmounts[0].numerator, tokenAmounts[0].denominator)
       this.outputAmount = CurrencyAmount.fromFractionalAmount(route.output, amount.numerator, amount.denominator)
     }
 
@@ -222,8 +218,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     if (this.tradeType === TradeType.EXACT_INPUT) {
       return this.inputAmount
     } else {
-      const slippageAdjustedAmountIn = new Fraction(ONE).add(slippageTolerance).multiply(this.inputAmount.quotient)
-        .quotient
+      const slippageAdjustedAmountIn = new Fraction(ONE).add(slippageTolerance).multiply(this.inputAmount.quotient).quotient
       return CurrencyAmount.fromRawAmount(this.inputAmount.currency, slippageAdjustedAmountIn)
     }
   }
@@ -279,11 +274,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       if (amountOut.currency.equals(tokenOut)) {
         sortedInsert(
           bestTrades,
-          new Trade(
-            new Route([...currentPairs, pair], currencyAmountIn.currency, currencyOut),
-            currencyAmountIn,
-            TradeType.EXACT_INPUT
-          ),
+          new Trade(new Route([...currentPairs, pair], currencyAmountIn.currency, currencyOut), currencyAmountIn, TradeType.EXACT_INPUT),
           maxNumResults,
           tradeComparator
         )
@@ -361,11 +352,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
       if (amountIn.currency.equals(tokenIn)) {
         sortedInsert(
           bestTrades,
-          new Trade(
-            new Route([pair, ...currentPairs], currencyIn, currencyAmountOut.currency),
-            currencyAmountOut,
-            TradeType.EXACT_OUTPUT
-          ),
+          new Trade(new Route([pair, ...currentPairs], currencyIn, currencyAmountOut.currency), currencyAmountOut, TradeType.EXACT_OUTPUT),
           maxNumResults,
           tradeComparator
         )

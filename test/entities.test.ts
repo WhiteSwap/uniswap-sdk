@@ -1,15 +1,5 @@
 import invariant from 'tiny-invariant'
-import {
-  ChainId,
-  TradeType,
-  Token,
-  Pair,
-  Route,
-  Trade,
-  CurrencyAmount,
-  BigintIsh,
-  WRAPPED_NATIVE_CURRENCY
-} from '../src'
+import { ChainId, TradeType, Token, Pair, Route, Trade, CurrencyAmount, BigintIsh, WRAPPED_NATIVE_CURRENCY } from '../src'
 import JSBI from 'jsbi'
 
 const ADDRESSES = [
@@ -67,9 +57,9 @@ describe('entities', () => {
       it('#midPrice', () => {
         invariant(route.input instanceof Token)
         invariant(route.output instanceof Token)
-        expect(
-          route.midPrice.quote(CurrencyAmount.fromRawAmount(route.input, decimalize(1, route.input.decimals))).toExact()
-        ).toEqual(CurrencyAmount.fromRawAmount(route.output, decimalize(1234, route.output.decimals)).toExact())
+        expect(route.midPrice.quote(CurrencyAmount.fromRawAmount(route.input, decimalize(1, route.input.decimals))).toExact()).toEqual(
+          CurrencyAmount.fromRawAmount(route.output, decimalize(1234, route.output.decimals)).toExact()
+        )
         expect(
           route.midPrice
             .invert()
@@ -149,9 +139,7 @@ describe('entities', () => {
             const outputAmount = CurrencyAmount.fromRawAmount(tokens[1], '1')
             const trade = new Trade(route, outputAmount, TradeType.EXACT_INPUT)
 
-            expect(trade.priceImpact.toSignificant(18)).toEqual(
-              tokens[1].decimals === 9 ? '0.300000099400899902' : '0.3000000000000001'
-            )
+            expect(trade.priceImpact.toSignificant(18)).toEqual(tokens[1].decimals === 9 ? '0.300000099400899902' : '0.3000000000000001')
           }
         })
       })

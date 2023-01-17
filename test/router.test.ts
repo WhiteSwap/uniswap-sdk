@@ -1,16 +1,5 @@
 import invariant from 'tiny-invariant'
-import {
-  ChainId,
-  CurrencyAmount,
-  Pair,
-  Percent,
-  Route,
-  Router,
-  Token,
-  Trade,
-  NATIVE_CURRENCY,
-  WRAPPED_NATIVE_CURRENCY
-} from '../src'
+import { ChainId, CurrencyAmount, Pair, Percent, Route, Router, Token, Trade, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from '../src'
 
 import JSBI from 'jsbi'
 function checkDeadline(deadline: string[] | string): void {
@@ -233,10 +222,7 @@ describe('Router', () => {
         })
         it('token0 to token1', () => {
           const result = Router.swapCallParameters(
-            Trade.exactIn(
-              new Route([pair_0_1], token0, token1),
-              CurrencyAmount.fromRawAmount(token0, JSBI.BigInt(100))
-            ),
+            Trade.exactIn(new Route([pair_0_1], token0, token1), CurrencyAmount.fromRawAmount(token0, JSBI.BigInt(100))),
             {
               ttl: 50,
               recipient: '0x0000000000000000000000000000000000000004',
@@ -291,10 +277,7 @@ describe('Router', () => {
         it('token0 to token1', () => {
           expect(() =>
             Router.swapCallParameters(
-              Trade.exactOut(
-                new Route([pair_0_1], token0, token1),
-                CurrencyAmount.fromRawAmount(token1, JSBI.BigInt(100))
-              ),
+              Trade.exactOut(new Route([pair_0_1], token0, token1), CurrencyAmount.fromRawAmount(token1, JSBI.BigInt(100))),
               {
                 ttl: 50,
                 recipient: '0x0000000000000000000000000000000000000004',

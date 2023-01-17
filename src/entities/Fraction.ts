@@ -59,10 +59,7 @@ export class Fraction {
       return new Fraction(JSBI.add(this.numerator, otherParsed.numerator), this.denominator)
     }
     return new Fraction(
-      JSBI.add(
-        JSBI.multiply(this.numerator, otherParsed.denominator),
-        JSBI.multiply(otherParsed.numerator, this.denominator)
-      ),
+      JSBI.add(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(otherParsed.numerator, this.denominator)),
       JSBI.multiply(this.denominator, otherParsed.denominator)
     )
   }
@@ -73,52 +70,34 @@ export class Fraction {
       return new Fraction(JSBI.subtract(this.numerator, otherParsed.numerator), this.denominator)
     }
     return new Fraction(
-      JSBI.subtract(
-        JSBI.multiply(this.numerator, otherParsed.denominator),
-        JSBI.multiply(otherParsed.numerator, this.denominator)
-      ),
+      JSBI.subtract(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(otherParsed.numerator, this.denominator)),
       JSBI.multiply(this.denominator, otherParsed.denominator)
     )
   }
 
   public lessThan(other: Fraction | BigintIsh): boolean {
     const otherParsed = Fraction.tryParseFraction(other)
-    return JSBI.lessThan(
-      JSBI.multiply(this.numerator, otherParsed.denominator),
-      JSBI.multiply(otherParsed.numerator, this.denominator)
-    )
+    return JSBI.lessThan(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(otherParsed.numerator, this.denominator))
   }
 
   public equalTo(other: Fraction | BigintIsh): boolean {
     const otherParsed = Fraction.tryParseFraction(other)
-    return JSBI.equal(
-      JSBI.multiply(this.numerator, otherParsed.denominator),
-      JSBI.multiply(otherParsed.numerator, this.denominator)
-    )
+    return JSBI.equal(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(otherParsed.numerator, this.denominator))
   }
 
   public greaterThan(other: Fraction | BigintIsh): boolean {
     const otherParsed = Fraction.tryParseFraction(other)
-    return JSBI.greaterThan(
-      JSBI.multiply(this.numerator, otherParsed.denominator),
-      JSBI.multiply(otherParsed.numerator, this.denominator)
-    )
+    return JSBI.greaterThan(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(otherParsed.numerator, this.denominator))
   }
 
   public multiply(other: Fraction | BigintIsh): Fraction {
     const otherParsed = Fraction.tryParseFraction(other)
-    return new Fraction(
-      JSBI.multiply(this.numerator, otherParsed.numerator),
-      JSBI.multiply(this.denominator, otherParsed.denominator)
-    )
+    return new Fraction(JSBI.multiply(this.numerator, otherParsed.numerator), JSBI.multiply(this.denominator, otherParsed.denominator))
   }
 
   public divide(other: Fraction | BigintIsh): Fraction {
     const otherParsed = Fraction.tryParseFraction(other)
-    return new Fraction(
-      JSBI.multiply(this.numerator, otherParsed.denominator),
-      JSBI.multiply(this.denominator, otherParsed.numerator)
-    )
+    return new Fraction(JSBI.multiply(this.numerator, otherParsed.denominator), JSBI.multiply(this.denominator, otherParsed.numerator))
   }
 
   public toSignificant(
@@ -130,17 +109,11 @@ export class Fraction {
     invariant(significantDigits > 0, `${significantDigits} is not positive.`)
 
     Decimal.set({ rounding: toSignificantRounding[rounding] })
-    const quotient = new Decimal(this.numerator.toString())
-      .div(this.denominator.toString())
-      .toSignificantDigits(significantDigits)
+    const quotient = new Decimal(this.numerator.toString()).div(this.denominator.toString()).toSignificantDigits(significantDigits)
     return quotient.toFormat(quotient.decimalPlaces(), format)
   }
 
-  public toFixed(
-    decimalPlaces: number,
-    format: object = { groupSeparator: '' },
-    rounding: Rounding = Rounding.ROUND_HALF_UP
-  ): string {
+  public toFixed(decimalPlaces: number, format: object = { groupSeparator: '' }, rounding: Rounding = Rounding.ROUND_HALF_UP): string {
     invariant(Number.isInteger(decimalPlaces), `${decimalPlaces} is not an integer.`)
     invariant(decimalPlaces >= 0, `${decimalPlaces} is negative.`)
 
