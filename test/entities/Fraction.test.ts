@@ -4,7 +4,10 @@ import JSBI from 'jsbi'
 describe('Fraction', () => {
   describe('#constructor', () => {
     it('should create instance of Fraction', () => {
-      expect(new Fraction(1, 2)).toBeInstanceOf(Fraction)
+      const fraction = new Fraction(1, 2)
+      expect(fraction).toBeInstanceOf(Fraction)
+      expect(fraction.denominator).toEqual(JSBI.BigInt(2))
+      expect(fraction.numerator).toEqual(JSBI.BigInt(1))
     })
     it('should fail to create instance with invalid numbers', () => {
       expect(() => new Fraction('testNum', 'testNum')).toThrowError('Cannot convert testNum to a BigInt')

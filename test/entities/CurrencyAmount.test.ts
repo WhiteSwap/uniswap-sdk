@@ -17,6 +17,9 @@ describe('CurrencyAmount', () => {
   describe('#constructor', () => {
     it('should create instance', () => {
       const amount = CurrencyAmount.fromRawAmount(token, 100)
+      expect(amount).toBeInstanceOf(CurrencyAmount)
+      expect(amount.decimalScale).toEqual(JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(token.decimals)))
+      expect(amount.currency).toEqual(token)
       expect(amount.quotient).toEqual(JSBI.BigInt(100))
     })
   })
@@ -117,7 +120,7 @@ describe('CurrencyAmount', () => {
       expect(amount.toDecimalPlaces()).toEqual('123456')
     })
     it('is correct for 18 decimals', () => {
-    const amount = CurrencyAmount.fromRawAmount(token, 1234567890123456789012345)
+      const amount = CurrencyAmount.fromRawAmount(token, 1234567890123456789012345)
       expect(amount.toDecimalPlaces()).toEqual('1234567.89012345')
     })
   })

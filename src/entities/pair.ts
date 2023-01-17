@@ -26,7 +26,7 @@ export class Pair {
     if (tokenAmountA.currency.chainId !== tokenAmountB.currency.chainId) {
       throw new Error('Pair cannot be created with different chainIds')
     }
-     const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
+    const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [tokenAmountA, tokenAmountB]
       : [tokenAmountB, tokenAmountA]
     this.liquidityToken = new Token(

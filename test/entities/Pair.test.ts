@@ -13,7 +13,16 @@ describe('Pair', () => {
   const DAI = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'DAI Stablecoin')
 
   describe('#constructor', () => {
-    it('cannot be used for tokens on different chains', () => {
+    it('should create ethereum Pair instance with valid params', () => {
+      const pair = new Pair(CurrencyAmount.fromRawAmount(USDC, 10), CurrencyAmount.fromRawAmount(DAI, 2))
+      expect(pair).toBeInstanceOf(Pair)
+      expect(pair.chainId).toEqual(ChainId.MAINNET)
+      expect(pair.liquidityToken).toEqual(
+        new Token(ChainId.MAINNET, Pair.getAddress(USDC, DAI), 18, 'WSS-LP', 'WhiteSwap LP')
+      )
+    })
+    // TODO: create unit test for creating tron pair
+    it('should fail to create pair for tokens on different chains', () => {
       expect(
         () =>
           new Pair(
@@ -25,33 +34,37 @@ describe('Pair', () => {
   })
 
   describe('#getAddress', () => {
-    it('returns the correct address', () => {
+    it('should returns the correct address', () => {
       expect(Pair.getAddress(USDC, DAI)).toEqual('0x47ae2e110AAb81a23ED93842b5A8D96CD93AB93c')
     })
   })
 
   describe('#token0', () => {
-    it('always is the token that sorts before', () => {
-      expect(
-        new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token0
-      ).toEqual(DAI)
+    it('should save same order of tokens if token0 < token1', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '100')).token0
       ).toEqual(DAI)
     })
+    it('should swap token0 & token1 if token0 > token1', () => {
+      expect(
+        new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token0
+      ).toEqual(DAI)
+    })
   })
   describe('#token1', () => {
-    it('always is the token that sorts after', () => {
-      expect(
-        new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token1
-      ).toEqual(USDC)
+    it('should save same order of tokens if token0 < token1', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(DAI, '100'), CurrencyAmount.fromRawAmount(USDC, '100')).token1
       ).toEqual(USDC)
     })
+    it('should swap token0 & token1 if token0 > token1', () => {
+      expect(
+        new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '100')).token1
+      ).toEqual(USDC)
+    })
   })
   describe('#reserve0', () => {
-    it('always comes from the token that sorts before', () => {
+    it('should return correct reserve for sorted tokens', () => {
       expect(
         new Pair(CurrencyAmount.fromRawAmount(USDC, '100'), CurrencyAmount.fromRawAmount(DAI, '101')).reserve0
       ).toEqual(CurrencyAmount.fromRawAmount(DAI, '101'))

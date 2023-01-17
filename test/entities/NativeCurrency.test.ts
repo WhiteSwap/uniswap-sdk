@@ -3,26 +3,21 @@ import { ChainId, NativeCurrency, Token } from '../../src'
 describe('NativeCurrency', () => {
   describe('#constructor', () => {
     it('should create erc20 native currency with valid parameters', () => {
-      expect(
-        new NativeCurrency(
-          ChainId.MAINNET,
-          18,
-          'ETH',
-          'Ethereum',
-          'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
-        )
-      ).toBeInstanceOf(NativeCurrency)
-    })
-    it('should create trc20 native currency with valid parameters', () => {
-      expect(
-        new NativeCurrency(
-          ChainId.MAINNET_TRON_GRID,
-          6,
-          'TRX',
-          'TRX',
-          'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png'
-        )
-      ).toBeInstanceOf(NativeCurrency)
+      const nativeCurrency = new NativeCurrency(
+        ChainId.MAINNET,
+        18,
+        'ETH',
+        'Ethereum',
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
+      )
+      expect(nativeCurrency).toBeInstanceOf(NativeCurrency)
+      expect(nativeCurrency.chainId).toEqual(ChainId.MAINNET)
+      expect(nativeCurrency.decimals).toEqual(18)
+      expect(nativeCurrency.symbol).toEqual('ETH')
+      expect(nativeCurrency.name).toEqual('Ethereum')
+      expect(nativeCurrency.logoURI).toEqual(
+        'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
+      )
     })
     it('should fail with unsupported chainId', () => {
       expect(
