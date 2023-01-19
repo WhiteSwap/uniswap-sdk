@@ -1,41 +1,54 @@
-// TODO: remove
-import { FACTORY_ADDRESS, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE } from '../constants/index'
+import { FACTORY_ADDRESS, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE, Chains, LIQUIDITY_TOKEN } from '../constants/index'
 import { InsufficientReservesError, InsufficientInputAmountError } from '../error'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
-import { ChainId, BigintIsh } from '../types'
-import { computePairAddress, sqrt } from '../utils'
+import { ChainId, BigintIsh, Chain } from '../types'
+import { computePairAddress, getBase58Create2Address, sqrt } from '../utils'
 import { CurrencyAmount } from './CurrencyAmount'
 import { Price } from './Price'
 import { Token } from './Token'
 
 export class Pair {
+  public readonly address: string
   public readonly liquidityToken: Token
   private readonly tokenAmounts: CurrencyAmount<Token>[]
 
-  // TODO: remove
   public static getAddress(tokenA: Token, tokenB: Token): string {
+    if (tokenA.equals(tokenB)) {
+      throw new Error('Cannot compute address for identical tokens')
+    }
+
+    if (tokenA.chainId !== tokenB.chainId) {
+      throw new Error('Tokens should have same chainId')
+    }
+
+    const factoryAddress = FACTORY_ADDRESS[tokenA.chainId]
+    if (Chains[tokenA.chainId] === Chain.TRON) {
+      return getBase58Create2Address({
+        factoryAddress,
+        tokenA,
+        tokenB
+      })
+    }
+
     return computePairAddress({
-      factoryAddress: FACTORY_ADDRESS[tokenA.chainId],
+      factoryAddress,
       tokenA,
       tokenB
     })
   }
 
-  public constructor(tokenAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>) {
+  public constructor(tokenAmountA: CurrencyAmount<Token>, tokenAmountB: CurrencyAmount<Token>, address?: string) {
     if (tokenAmountA.currency.chainId !== tokenAmountB.currency.chainId) {
       throw new Error('Pair cannot be created with different chainIds')
     }
     const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [tokenAmountA, tokenAmountB]
       : [tokenAmountB, tokenAmountA]
-    this.liquidityToken = new Token(
-      tokenAmounts[0].currency.chainId,
-      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
-      18,
-      'WSS-LP',
-      'WhiteSwap LP'
-    )
+    const { name, symbol, decimals } = LIQUIDITY_TOKEN[Chains[tokenAmounts[0].currency.chainId]]
+    const computedAddress = address || Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency)
+    this.address = computedAddress
+    this.liquidityToken = new Token(tokenAmounts[0].currency.chainId, computedAddress, decimals, name, symbol)
     this.tokenAmounts = tokenAmounts
   }
 

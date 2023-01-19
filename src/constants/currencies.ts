@@ -1,4 +1,4 @@
-import { ChainId, Currency } from '../types'
+import { Chain, ChainId, Currency } from '../types'
 import { Token, NativeCurrency } from '../entities'
 
 type Currencies<T extends Currency> = { [chainId in ChainId]: T }
@@ -34,4 +34,17 @@ export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
   [ChainId.MAINNET_TRON_GRID]: new NativeCurrency(ChainId.MAINNET_TRON_GRID, 6, 'TRX', 'TRX'),
   [ChainId.TESTNET_SHASTA]: new NativeCurrency(ChainId.TESTNET_SHASTA, 6, 'TRX', 'TRX')
+}
+
+export const LIQUIDITY_TOKEN: Record<Chain, { name: string; symbol: string; decimals: number }> = {
+  [Chain.ETHEREUM]: {
+    name: 'WSwap',
+    symbol: 'WSS',
+    decimals: 18
+  },
+  [Chain.TRON]: {
+    name: 'WhiteSwap V2',
+    symbol: 'WhiteSwap-V2',
+    decimals: 18
+  }
 }

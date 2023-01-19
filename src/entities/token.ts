@@ -1,5 +1,5 @@
 import { ChainId, Currency } from '../types'
-import { isValidAddress } from '../utils'
+import { hexlifyAddress, isValidAddress } from '../utils'
 import { AbstractCurrency } from './AbstractCurrency'
 
 interface IToken {
@@ -25,12 +25,10 @@ export class Token extends AbstractCurrency implements IToken {
     return other instanceof Token && other.chainId === this.chainId && other.address === this.address
   }
 
-  // TODO: remove from public methods
   public sortsBefore(other: Token): boolean {
     if (this.equals(other)) {
       throw new Error('Tokens are equal. Cannot sort')
     }
-
-    return this.address.toLowerCase() < other.address.toLowerCase()
+    return hexlifyAddress(this.address) < hexlifyAddress(other.address)
   }
 }

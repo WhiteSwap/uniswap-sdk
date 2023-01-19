@@ -1,4 +1,14 @@
-import { CurrencyAmount, Pair, Price, Token, InsufficientInputAmountError, WRAPPED_NATIVE_CURRENCY, ChainId } from '../../src'
+import {
+  CurrencyAmount,
+  Pair,
+  Price,
+  Token,
+  InsufficientInputAmountError,
+  WRAPPED_NATIVE_CURRENCY,
+  ChainId,
+  LIQUIDITY_TOKEN,
+  Chain
+} from '../../src'
 
 describe('Pair', () => {
   const USDC = new Token(ChainId.MAINNET, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 18, 'USDC', 'USD Coin')
@@ -9,7 +19,15 @@ describe('Pair', () => {
       const pair = new Pair(CurrencyAmount.fromRawAmount(USDC, 10), CurrencyAmount.fromRawAmount(DAI, 2))
       expect(pair).toBeInstanceOf(Pair)
       expect(pair.chainId).toEqual(ChainId.MAINNET)
-      expect(pair.liquidityToken).toEqual(new Token(ChainId.MAINNET, Pair.getAddress(USDC, DAI), 18, 'WSS-LP', 'WhiteSwap LP'))
+      expect(pair.liquidityToken).toEqual(
+        new Token(
+          ChainId.MAINNET,
+          Pair.getAddress(USDC, DAI),
+          18,
+          LIQUIDITY_TOKEN[Chain.ETHEREUM].name,
+          LIQUIDITY_TOKEN[Chain.ETHEREUM].symbol
+        )
+      )
     })
     // TODO: create unit test for creating tron pair
     it('should fail to create pair for tokens on different chains', () => {

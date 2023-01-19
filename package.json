@@ -25,15 +25,16 @@
     "prepublishOnly": "tsdx build"
   },
   "dependencies": {
+    "@ethersproject/address": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/solidity": "^5.7.0",
     "big.js": "^5.2.2",
     "decimal.js-light": "^2.5.1",
     "jsbi": "3.2.5",
     "tiny-invariant": "^1.2.0",
     "tiny-warning": "^1.0.3",
     "toformat": "^2.0.0",
-    "tronweb": "^5.0.0",
-    "@ethersproject/address": "^5.7.0",
-    "@ethersproject/solidity": "^5.7.0"
+    "tronweb": "^5.0.0"
   },
   "devDependencies": {
     "@types/big.js": "^6.1.6",
