@@ -7,7 +7,7 @@ import {
   WRAPPED_NATIVE_CURRENCY,
   ChainId,
   LIQUIDITY_TOKEN,
-  Chain
+  Network
 } from '../../src'
 
 describe('Pair', () => {
@@ -24,8 +24,8 @@ describe('Pair', () => {
           ChainId.MAINNET,
           Pair.getAddress(USDC, DAI),
           18,
-          LIQUIDITY_TOKEN[Chain.ETHEREUM].name,
-          LIQUIDITY_TOKEN[Chain.ETHEREUM].symbol
+          LIQUIDITY_TOKEN[Network.ETHEREUM].name,
+          LIQUIDITY_TOKEN[Network.ETHEREUM].symbol
         )
       )
     })

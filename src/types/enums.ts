@@ -23,7 +23,12 @@ export enum SolidityIntegerType {
   uint256 = 'uint256'
 }
 
-export enum Chain {
+export enum Network {
   ETHEREUM,
   TRON
+}
+
+export enum NetworkType {
+  L1,
+  L2
 }

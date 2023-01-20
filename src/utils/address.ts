@@ -1,21 +1,20 @@
 import { isAddress, getAddress, getCreate2Address } from '@ethersproject/address'
-import { Chains } from '../constants/chains'
 import invariant from 'tiny-invariant'
-import { ChainId, Chain } from '../types'
+import { ChainId, Network } from '../types'
 import { Token } from '../entities'
 import tronWeb from 'tronweb'
-import { INIT_CODE_HASH, TRON_ADDRESS_PREFIX, TRON_ADDRESS_PREFIX_REGEX } from '../constants'
+import { CHAINS, INIT_CODE_HASH, TRON_ADDRESS_PREFIX, TRON_ADDRESS_PREFIX_REGEX } from '../constants'
 import { keccak256, pack } from '@ethersproject/solidity'
 import { hexToString } from './bytes'
 
 export function isValidAddress(address: string, chainId: ChainId): boolean {
-  if (Chains[chainId] === Chain.ETHEREUM) {
-    return isAddress(address)
+  if (!CHAINS[chainId]) {
+    throw new Error(`Unsupported chainId for validating address. ChainId: ${chainId}, address: ${address}`)
   }
-  if (Chains[chainId] === Chain.TRON) {
+  if (CHAINS[chainId].network === Network.TRON) {
     return tronWeb.isAddress(address)
   }
-  throw new Error(`Unsupported chainId for validating address. ChainId: ${chainId}, address: ${address}`)
+  return isAddress(address)
 }
 
 // warns if addresses are not checksummed

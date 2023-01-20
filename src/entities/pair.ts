@@ -1,8 +1,8 @@
-import { FACTORY_ADDRESS, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE, Chains, LIQUIDITY_TOKEN } from '../constants/index'
+import { FACTORY_ADDRESS, ZERO, _997, _1000, ONE, MINIMUM_LIQUIDITY, FIVE, CHAINS, LIQUIDITY_TOKEN } from '../constants/index'
 import { InsufficientReservesError, InsufficientInputAmountError } from '../error'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
-import { ChainId, BigintIsh, Chain } from '../types'
+import { ChainId, BigintIsh, Network } from '../types'
 import { computePairAddress, getBase58Create2Address, sqrt } from '../utils'
 import { CurrencyAmount } from './CurrencyAmount'
 import { Price } from './Price'
@@ -23,7 +23,7 @@ export class Pair {
     }
 
     const factoryAddress = FACTORY_ADDRESS[tokenA.chainId]
-    if (Chains[tokenA.chainId] === Chain.TRON) {
+    if (CHAINS[tokenA.chainId].network === Network.TRON) {
       return getBase58Create2Address({
         factoryAddress,
         tokenA,
@@ -45,7 +45,7 @@ export class Pair {
     const tokenAmounts = tokenAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [tokenAmountA, tokenAmountB]
       : [tokenAmountB, tokenAmountA]
-    const { name, symbol, decimals } = LIQUIDITY_TOKEN[Chains[tokenAmounts[0].currency.chainId]]
+    const { name, symbol, decimals } = LIQUIDITY_TOKEN[CHAINS[tokenAmounts[0].currency.chainId].network]
     const computedAddress = address || Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency)
     this.address = computedAddress
     this.liquidityToken = new Token(tokenAmounts[0].currency.chainId, computedAddress, decimals, name, symbol)

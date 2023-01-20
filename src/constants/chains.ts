@@ -1,10 +1,28 @@
-import { Chain, ChainId } from '../types'
+import { ChainId, ChainInfo, Network, NetworkType } from '../types'
 
-export const Chains: Record<ChainId, Chain> = {
-  [ChainId.MAINNET]: Chain.ETHEREUM,
-  [ChainId.GOERLI]: Chain.ETHEREUM,
-  [ChainId.POLYGON]: Chain.ETHEREUM,
-  [ChainId.POLYGON_MUMBAI]: Chain.ETHEREUM,
-  [ChainId.MAINNET_TRON_GRID]: Chain.TRON,
-  [ChainId.TESTNET_SHASTA]: Chain.TRON
+export const CHAINS: Record<ChainId, ChainInfo> = {
+  [ChainId.MAINNET]: {
+    networkType: NetworkType.L1,
+    network: Network.ETHEREUM
+  },
+  [ChainId.GOERLI]: {
+    networkType: NetworkType.L1,
+    network: Network.ETHEREUM
+  },
+  [ChainId.POLYGON]: {
+    networkType: NetworkType.L1,
+    network: Network.ETHEREUM
+  },
+  [ChainId.POLYGON_MUMBAI]: {
+    networkType: NetworkType.L1,
+    network: Network.ETHEREUM
+  },
+  [ChainId.MAINNET_TRON_GRID]: {
+    networkType: NetworkType.L1,
+    network: Network.TRON
+  },
+  [ChainId.TESTNET_SHASTA]: {
+    networkType: NetworkType.L1,
+    network: Network.TRON
+  }
 }
