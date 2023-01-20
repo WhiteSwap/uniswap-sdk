@@ -1,9 +1,7 @@
-// TODO: remove
-// @ts-nocheck
 import { ZERO, ONE } from '../constants/index'
 import { InsufficientInputAmountError, InsufficientReservesError } from '../error'
 import invariant from 'tiny-invariant'
-import { ChainId, Currency, TradeType } from '../types'
+import { Currency, TradeType } from '../types'
 import { sortedInsert } from '../utils'
 import { CurrencyAmount } from './CurrencyAmount'
 import { Fraction } from './Fraction'
@@ -12,6 +10,7 @@ import { Percent } from './Percent'
 import { Price } from './Price'
 import { Token } from './Token'
 import { Route } from './Route'
+import { NativeCurrency } from './NativeCurrency'
 
 /**
  * Returns the percent difference between the mid price and the execution price, i.e. price impact.
@@ -243,17 +242,15 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     { maxNumResults = 3, maxHops = 3 }: BestTradeOptions = {},
     // used in recursion.
     currentPairs: Pair[] = [],
-    originalAmountIn: CurrencyAmount<Currency> = currencyAmountIn,
+    nextAmountIn: CurrencyAmount<Currency> = currencyAmountIn,
     bestTrades: Trade<TInput, TOutput, TradeType.EXACT_INPUT>[] = []
   ): Trade<TInput, TOutput, TradeType.EXACT_INPUT>[] {
     invariant(pairs.length > 0, 'PAIRS')
     invariant(maxHops > 0, 'MAX_HOPS')
-    invariant(originalAmountIn === currencyAmountIn || currentPairs.length > 0, 'INVALID_RECURSION')
-    const chainId: ChainId = currencyAmountIn.currency.chainId || currencyOut.chainId
-    invariant(chainId !== undefined, 'CHAIN_ID')
+    invariant(currencyAmountIn === nextAmountIn || currentPairs.length > 0, 'INVALID_RECURSION')
 
-    const amountIn = currencyAmountIn.wrapped
-    const tokenOut = currencyOut instanceof Token ? currencyOut : currencyOut.wrappedToken
+    const amountIn = nextAmountIn.wrapped
+    const tokenOut = currencyOut instanceof NativeCurrency ? currencyOut.wrappedToken : currencyOut
     for (let i = 0; i < pairs.length; i++) {
       const pair = pairs[i]
       // pair irrelevant
@@ -265,7 +262,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         ;[amountOut] = pair.getOutputAmount(amountIn)
       } catch (error) {
         // input too low
-        if (error instanceof InsufficientInputAmountError && error.isInsufficientInputAmountError) {
+        if (error instanceof InsufficientInputAmountError) {
           continue
         }
         throw error
@@ -284,14 +281,14 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         // otherwise, consider all the other paths that lead from this token as long as we have not exceeded maxHops
         Trade.bestTradeExactIn(
           pairsExcludingThisPair,
-          amountOut,
+          currencyAmountIn,
           currencyOut,
           {
             maxNumResults,
             maxHops: maxHops - 1
           },
           [...currentPairs, pair],
-          originalAmountIn,
+          amountOut,
           bestTrades
         )
       }
@@ -330,8 +327,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
     invariant(currencyAmountOut === nextAmountOut || currentPairs.length > 0, 'INVALID_RECURSION')
 
     const amountOut = nextAmountOut.wrapped
-    const tokenIn = currencyIn instanceof Token ? currencyIn : currencyIn.wrappedToken
-
+    const tokenIn = currencyIn instanceof NativeCurrency ? currencyIn.wrappedToken : currencyIn
     for (let i = 0; i < pairs.length; i++) {
       const pair = pairs[i]
       // pair irrelevant
@@ -343,7 +339,7 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         ;[amountIn] = pair.getInputAmount(amountOut)
       } catch (error) {
         // not enough liquidity in this pair
-        if (error instanceof InsufficientReservesError && error.isInsufficientReservesError) {
+        if (error instanceof InsufficientReservesError) {
           continue
         }
         throw error
@@ -363,18 +359,30 @@ export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType
         Trade.bestTradeExactOut(
           pairsExcludingThisPair,
           currencyIn,
-          amountIn,
+          currencyAmountOut,
           {
             maxNumResults,
             maxHops: maxHops - 1
           },
           [pair, ...currentPairs],
-          originalAmountOut,
+          amountIn,
           bestTrades
         )
       }
     }
 
     return bestTrades
+  }
+  /**
+   * Return the execution price after accounting for slippage tolerance
+   * @param slippageTolerance the allowed tolerated slippage
+   */
+  public worstExecutionPrice(slippageTolerance: Percent): Price<TInput, TOutput> {
+    return new Price(
+      this.inputAmount.currency,
+      this.outputAmount.currency,
+      this.maximumAmountIn(slippageTolerance).quotient,
+      this.minimumAmountOut(slippageTolerance).quotient
+    )
   }
 }
