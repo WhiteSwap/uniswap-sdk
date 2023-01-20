@@ -7,6 +7,7 @@ import { validateSolidityIntegerType } from '../utils'
 import { Fraction } from './Fraction'
 import toFormat from 'toformat'
 import { MAX_DECIMAL_PLACES } from '../constants/index'
+import { parseUnits } from '@ethersproject/units'
 
 const Big = toFormat(_Big)
 
@@ -14,6 +15,10 @@ export class CurrencyAmount<T extends Currency> extends Fraction {
   public readonly currency: T
   public readonly decimalScale: JSBI
 
+  public static fromFloatAmount<T extends Currency>(value: string, currency: T): CurrencyAmount<T> {
+    const typedValueParsed = parseUnits(value, currency.decimals).toString()
+    return CurrencyAmount.fromRawAmount(currency, typedValueParsed)
+  }
   /**
    * Returns a new currency amount instance from the unitless amount of token, i.e. the raw amount
    * @param currency the currency in the amount

@@ -3,6 +3,7 @@ import JSBI from 'jsbi'
 
 describe('CurrencyAmount', () => {
   const ADDRESS_ONE = '0x0000000000000000000000000000000000000001'
+  const MOCK_TRON_ADDRESS = 'TF93BSusoPh9fPa6fizSnRFV4zuyVgEwFY'
   const token = new Token(ChainId.MAINNET, ADDRESS_ONE, 18, 'TEST', 'TEST')
   const zeroDecimalToken = new Token(ChainId.MAINNET, ADDRESS_ONE, 0, 'TEST', 'TEST')
 
@@ -119,6 +120,37 @@ describe('CurrencyAmount', () => {
     it('should return wrapped amount for native currency', () => {
       const amount = CurrencyAmount.fromRawAmount(NATIVE_CURRENCY[ChainId.MAINNET], 1000)
       expect(amount.wrapped).toEqual(CurrencyAmount.fromFractionalAmount(WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET], 1000, 1))
+    })
+  })
+  describe('#fromFloatAmount', () => {
+    it('correct convert float amount to erc20 token', () => {
+      const tokenDecimal18 = new Token(ChainId.MAINNET, ADDRESS_ONE, 18, 'test', 'test')
+      const tokenDecimal6 = new Token(ChainId.MAINNET, ADDRESS_ONE, 6, 'test1', 'test1')
+      const tokenDecimal4 = new Token(ChainId.MAINNET, ADDRESS_ONE, 4, 'test2', 'test2')
+
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal18)).toEqual(
+        CurrencyAmount.fromRawAmount(tokenDecimal18, 1230000000000000000)
+      )
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal6)).toEqual(CurrencyAmount.fromRawAmount(tokenDecimal6, 1230000))
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal4)).toEqual(CurrencyAmount.fromRawAmount(tokenDecimal4, 12300))
+    })
+    it('correct convert float amount to trc20 token', () => {
+      const tokenDecimal18 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 18, 'test', 'test')
+      const tokenDecimal6 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 6, 'test1', 'test1')
+      const tokenDecimal4 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 4, 'test2', 'test2')
+
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal18)).toEqual(
+        CurrencyAmount.fromRawAmount(tokenDecimal18, 1230000000000000000)
+      )
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal6)).toEqual(CurrencyAmount.fromRawAmount(tokenDecimal6, 1230000))
+      expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal4)).toEqual(CurrencyAmount.fromRawAmount(tokenDecimal4, 12300))
+    })
+    it('throw error with invalid amount', () => {
+      expect(() => CurrencyAmount.fromFloatAmount('<1.23', token)).toThrow()
+    })
+    it('throw error with invalid decimals', () => {
+      const invalidToken = new Token(ChainId.MAINNET, ADDRESS_ONE, 1, 'test', 'test')
+      expect(() => CurrencyAmount.fromFloatAmount('1.23', invalidToken)).toThrow()
     })
   })
 })
