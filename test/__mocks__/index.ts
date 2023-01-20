@@ -1,0 +1,23 @@
+import { ChainId, Token } from '../../src'
+
+/* MOCK TRC20 ADDRESSES */
+export const MOCK_ZERO_ETH_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const MOCK_ZERO_TRC_ADDRESS = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb'
+
+/* MOCK ERC20 ADDRESSES */
+export const MOCK_ETH_ADDRESS_0 = '0x0000000000000000000000000000000000000001'
+export const MOCK_ETH_ADDRESS_1 = '0x0000000000000000000000000000000000000002'
+export const MOCK_ETH_ADDRESS_2 = '0x0000000000000000000000000000000000000003'
+
+/* MOCK ERC20 TOKENS */
+export const MOCK_ERC20_TOKEN_0 = new Token(ChainId.MAINNET, MOCK_ZERO_ETH_ADDRESS, 18, 'mockSymbol0', 'mockName0')
+export const MOCK_ERC20_TOKEN_1 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 18, 'mockSymbol1', 'mockName1')
+export const MOCK_ERC20_TOKEN_2 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_1, 18, 'mockSymbol2', 'mockName2')
+export const MOCK_ERC20_TOKEN_3 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_2, 18, 'mockSymbol2', 'mockName2')
+export const MOCK_USDC_MAINNET = new Token(ChainId.MAINNET, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD Coin')
+export const MOCK_DAI_MAINNET = new Token(ChainId.MAINNET, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'DAI Stablecoin')
+export const MOCK_USDT_MAINNET = new Token(ChainId.MAINNET, '0xdAC17F958D2ee523a2206206994597C13D831ec7', 6, 'USDT', 'Tether USD')
+
+/* MOCK TRC20 TOKENS */
+export const MOCK_WTRX_TRON = new Token(ChainId.MAINNET_TRON_GRID, 'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR', 6, 'WTRX', 'Wrapped TRX')
+export const MOCK_USDT_TRON = new Token(ChainId.MAINNET_TRON_GRID, 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t', 6, 'USDT', 'Tether USD')

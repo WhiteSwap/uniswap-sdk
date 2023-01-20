@@ -1,11 +1,10 @@
 import { CurrencyAmount, Percent, Token, ChainId, NATIVE_CURRENCY, SOLIDITY_INTEGER_TYPE_MAXIMA, WRAPPED_NATIVE_CURRENCY } from '../../src'
+import { MOCK_ETH_ADDRESS_0, MOCK_ZERO_TRC_ADDRESS, MOCK_ERC20_TOKEN_0 } from '../__mocks__'
 import JSBI from 'jsbi'
 
 describe('CurrencyAmount', () => {
-  const ADDRESS_ONE = '0x0000000000000000000000000000000000000001'
-  const MOCK_TRON_ADDRESS = 'TF93BSusoPh9fPa6fizSnRFV4zuyVgEwFY'
-  const token = new Token(ChainId.MAINNET, ADDRESS_ONE, 18, 'TEST', 'TEST')
-  const zeroDecimalToken = new Token(ChainId.MAINNET, ADDRESS_ONE, 0, 'TEST', 'TEST')
+  const token = MOCK_ERC20_TOKEN_0
+  const zeroDecimalToken = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 0, 'TEST', 'TEST')
 
   describe('#constructor', () => {
     it('should create instance', () => {
@@ -113,8 +112,7 @@ describe('CurrencyAmount', () => {
   })
   describe('#wrapped', () => {
     it('should return amount for current token', () => {
-      const token = new Token(ChainId.MAINNET, ADDRESS_ONE, 0, 'TEST', 'TEST')
-      const amount = CurrencyAmount.fromRawAmount(token, 1000)
+      const amount = CurrencyAmount.fromRawAmount(zeroDecimalToken, 1000)
       expect(amount.wrapped).toEqual(amount)
     })
     it('should return wrapped amount for native currency', () => {
@@ -124,9 +122,9 @@ describe('CurrencyAmount', () => {
   })
   describe('#fromFloatAmount', () => {
     it('correct convert float amount to erc20 token', () => {
-      const tokenDecimal18 = new Token(ChainId.MAINNET, ADDRESS_ONE, 18, 'test', 'test')
-      const tokenDecimal6 = new Token(ChainId.MAINNET, ADDRESS_ONE, 6, 'test1', 'test1')
-      const tokenDecimal4 = new Token(ChainId.MAINNET, ADDRESS_ONE, 4, 'test2', 'test2')
+      const tokenDecimal18 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 18, 'test', 'test')
+      const tokenDecimal6 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 6, 'test1', 'test1')
+      const tokenDecimal4 = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 4, 'test2', 'test2')
 
       expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal18)).toEqual(
         CurrencyAmount.fromRawAmount(tokenDecimal18, 1230000000000000000)
@@ -135,9 +133,9 @@ describe('CurrencyAmount', () => {
       expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal4)).toEqual(CurrencyAmount.fromRawAmount(tokenDecimal4, 12300))
     })
     it('correct convert float amount to trc20 token', () => {
-      const tokenDecimal18 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 18, 'test', 'test')
-      const tokenDecimal6 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 6, 'test1', 'test1')
-      const tokenDecimal4 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_TRON_ADDRESS, 4, 'test2', 'test2')
+      const tokenDecimal18 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_ZERO_TRC_ADDRESS, 18, 'test', 'test')
+      const tokenDecimal6 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_ZERO_TRC_ADDRESS, 6, 'test1', 'test1')
+      const tokenDecimal4 = new Token(ChainId.MAINNET_TRON_GRID, MOCK_ZERO_TRC_ADDRESS, 4, 'test2', 'test2')
 
       expect(CurrencyAmount.fromFloatAmount('1.23', tokenDecimal18)).toEqual(
         CurrencyAmount.fromRawAmount(tokenDecimal18, 1230000000000000000)
@@ -148,8 +146,8 @@ describe('CurrencyAmount', () => {
     it('throw error with invalid amount', () => {
       expect(() => CurrencyAmount.fromFloatAmount('<1.23', token)).toThrow()
     })
-    it('throw error with invalid decimals', () => {
-      const invalidToken = new Token(ChainId.MAINNET, ADDRESS_ONE, 1, 'test', 'test')
+    it('throw error with decimals part equal to 1', () => {
+      const invalidToken = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 1, 'test', 'test')
       expect(() => CurrencyAmount.fromFloatAmount('1.23', invalidToken)).toThrow()
     })
   })

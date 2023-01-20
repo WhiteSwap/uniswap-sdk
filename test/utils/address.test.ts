@@ -1,31 +1,30 @@
+import { MOCK_DAI_MAINNET, MOCK_USDC_MAINNET } from '../__mocks__'
 import { ChainId, Token, FACTORY_ADDRESS } from '../../src'
 import { computePairAddress, getBase58Create2Address, isValidAddress } from '../../src/utils'
 
 describe('address', () => {
   describe('#computePairAddress', () => {
     const factoryAddress = FACTORY_ADDRESS[ChainId.MAINNET]
-    const USDC = new Token(1, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 18, 'USDC', 'USD Coin')
-    const DAI = new Token(1, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'DAI Stablecoin')
 
     it('correctly compute the pool address', () => {
       const result = computePairAddress({
         factoryAddress,
-        tokenA: USDC,
-        tokenB: DAI
+        tokenA: MOCK_USDC_MAINNET,
+        tokenB: MOCK_DAI_MAINNET
       })
       expect(result).toEqual('0x47ae2e110AAb81a23ED93842b5A8D96CD93AB93c')
     })
     it('give same result regardless of token order', () => {
       const resultA = computePairAddress({
         factoryAddress,
-        tokenA: USDC,
-        tokenB: DAI
+        tokenA: MOCK_USDC_MAINNET,
+        tokenB: MOCK_DAI_MAINNET
       })
 
       const resultB = computePairAddress({
         factoryAddress,
-        tokenA: DAI,
-        tokenB: USDC
+        tokenA: MOCK_DAI_MAINNET,
+        tokenB: MOCK_USDC_MAINNET
       })
 
       expect(resultA).toEqual(resultB)

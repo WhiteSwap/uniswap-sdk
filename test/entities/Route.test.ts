@@ -1,9 +1,10 @@
-import { ChainId, NATIVE_CURRENCY, Token, WRAPPED_NATIVE_CURRENCY, Route, Pair, CurrencyAmount } from '../../src'
+import { MOCK_ERC20_TOKEN_1, MOCK_ERC20_TOKEN_0 } from '../__mocks__'
+import { ChainId, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY, Route, Pair, CurrencyAmount } from '../../src'
 // TODO: refactor tests
 describe('Route', () => {
   const ETHER = NATIVE_CURRENCY[ChainId.MAINNET]
-  const token0 = new Token(1, '0x0000000000000000000000000000000000000001', 18, 't0', 'test')
-  const token1 = new Token(1, '0x0000000000000000000000000000000000000002', 18, 't1', 'test')
+  const token0 = MOCK_ERC20_TOKEN_0
+  const token1 = MOCK_ERC20_TOKEN_1
   const weth = WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET]
   const pair_0_1 = new Pair(CurrencyAmount.fromRawAmount(token0, '100'), CurrencyAmount.fromRawAmount(token1, '200'))
   const pair_0_weth = new Pair(CurrencyAmount.fromRawAmount(token0, '100'), CurrencyAmount.fromRawAmount(weth, '100'))
