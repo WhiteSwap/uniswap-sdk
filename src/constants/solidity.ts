@@ -7,5 +7,5 @@ export const SOLIDITY_INTEGER_TYPE_MAXIMA = {
 }
 
 export const TRON_ADDRESS_PREFIX = '41'
-export const TRON_ADDRESS_PREFIX_BYTE = 0x41
+export const TRON_ADDRESS_PREFIX_BYTE = '0x41'
 export const TRON_ADDRESS_PREFIX_REGEX = /^(41)/

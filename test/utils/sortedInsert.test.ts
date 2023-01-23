@@ -1,4 +1,4 @@
-import { sortedInsert } from '../../src/utils'
+import { sortedInsert } from '../../src'
 
 describe('#sortedInsert', () => {
   const comp = (a: number, b: number) => a - b

@@ -50,6 +50,7 @@ describe('address', () => {
   describe.skip('#getBase58Create2Address', () => {
     const USDC = new Token(ChainId.MAINNET_TRON_GRID, 'TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8', 6, 'USDC', 'Tether USD')
     const WSD = new Token(ChainId.MAINNET_TRON_GRID, 'TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S', 18, 'SUN', 'WSD')
+    const WTRX = new Token(ChainId.MAINNET_TRON_GRID, 'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR', 6, 'WTRX', 'WTRX')
 
     it('create correct address for TRON pair', () => {
       expect(
@@ -57,6 +58,13 @@ describe('address', () => {
           factoryAddress: FACTORY_ADDRESS[ChainId.MAINNET_TRON_GRID],
           tokenA: USDC,
           tokenB: WSD
+        })
+      ).toEqual('TF93BSusoPh9fPa6fizSnRFV4zuyVgEwFY')
+      expect(
+        getBase58Create2Address({
+          factoryAddress: FACTORY_ADDRESS[ChainId.MAINNET_TRON_GRID],
+          tokenA: WSD,
+          tokenB: WTRX
         })
       ).toEqual('TF93BSusoPh9fPa6fizSnRFV4zuyVgEwFY')
     })

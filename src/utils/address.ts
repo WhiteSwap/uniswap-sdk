@@ -5,7 +5,7 @@ import { Token } from '../entities'
 import tronWeb from 'tronweb'
 import { CHAINS, INIT_CODE_HASH, TRON_ADDRESS_PREFIX, TRON_ADDRESS_PREFIX_REGEX } from '../constants'
 import { keccak256, pack } from '@ethersproject/solidity'
-import { hexToString } from './bytes'
+import { arrayify } from '@ethersproject/bytes'
 
 export function isValidAddress(address: string, chainId: ChainId): boolean {
   if (!CHAINS[chainId]) {
@@ -37,14 +37,13 @@ export function getBase58Create2Address({
   tokenB: Token
 }): string {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
-  const hexFactoryAddress = tronWeb.address.toHex(factoryAddress).replace(TRON_ADDRESS_PREFIX_REGEX, '')
+  const initCodeHash = INIT_CODE_HASH[token0.chainId]
+  const hexFactoryAddress = tronWeb.address.toHex(factoryAddress)
   const hexToken0Address = tronWeb.address.toHex(token0.address).replace(TRON_ADDRESS_PREFIX_REGEX, '')
   const hexToken1Address = tronWeb.address.toHex(token1.address).replace(TRON_ADDRESS_PREFIX_REGEX, '')
-  const tokenStr = hexToken0Address + hexToken1Address
-  const initCodeHash = INIT_CODE_HASH[tokenA.chainId]
-  const tokenHash = tronWeb.sha3(hexToString(tokenStr)).replace(/0x/, '')
-  const hashResult = tronWeb.sha3(hexToString(`${TRON_ADDRESS_PREFIX}${hexFactoryAddress}${tokenHash}${initCodeHash}`))
-  return tronWeb.address.fromHex(`${TRON_ADDRESS_PREFIX}${hashResult.substr(-40)}`)
+  const tokenHash = tronWeb.sha3(arrayify(`${hexToken0Address}${hexToken1Address}`, { allowMissingPrefix: true }), false)
+  const hashResult = tronWeb.sha3(arrayify(`${hexFactoryAddress}${tokenHash}${initCodeHash}`, { allowMissingPrefix: true }))
+  return tronWeb.address.fromHex(`${TRON_ADDRESS_PREFIX}${hashResult.slice(-40)}`)
 }
 
 export function computePairAddress({ factoryAddress, tokenA, tokenB }: { factoryAddress: string; tokenA: Token; tokenB: Token }): string {
