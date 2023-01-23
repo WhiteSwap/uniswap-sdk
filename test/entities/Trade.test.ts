@@ -11,7 +11,7 @@ import {
   NATIVE_CURRENCY,
   WRAPPED_NATIVE_CURRENCY,
   Price
-} from '../src'
+} from '../../src'
 
 describe('Trade', () => {
   const token0 = new Token(1, '0x0000000000000000000000000000000000000001', 18, 't0', 't0')
