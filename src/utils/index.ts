@@ -1,5 +1,5 @@
 export * from './address'
-export * from './math'
+export * from './sqrt'
 export * from './bytes'
-export { sortedInsert } from './sortedInsert'
-export { validateSolidityIntegerType } from './validateSolidityIntegerType'
+export * from './validateSolidityIntegerType'
+export * from './sortedInsert'

@@ -1,11 +1,12 @@
-import { ZERO, THREE, TWO, ONE } from '../constants/index'
 import JSBI from 'jsbi'
 import { SolidityIntegerType } from '../types'
 import { validateSolidityIntegerType } from './validateSolidityIntegerType'
+import { ONE, THREE, TWO, ZERO } from '../constants'
 
 // mock the on-chain sqrt function
 export function sqrt(y: JSBI): JSBI {
   validateSolidityIntegerType(y, SolidityIntegerType.uint256)
+
   let z: JSBI = ZERO
   let x: JSBI
   if (JSBI.greaterThan(y, THREE)) {

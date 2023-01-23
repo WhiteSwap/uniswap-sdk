@@ -4,6 +4,7 @@ export function isHex(value: string) {
   return typeof value === 'string' && !isNaN(parseInt(value, 16)) && /^(0x|)[a-fA-F0-9]+$/.test(value)
 }
 
+// FIXME: remove var, fix reassign params
 export function hexToString(hex: string) {
   if (!isHex(hex)) {
     throw new Error('is not a hex string.')
