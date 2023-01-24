@@ -1,7 +1,6 @@
-// TODO: remove
-// @ts-nocheck
 import invariant from 'tiny-invariant'
 import { ChainId, Currency } from '../types'
+import { NativeCurrency } from './NativeCurrency'
 import { Pair } from './Pair'
 import { Price } from './Price'
 import { Token } from './Token'
@@ -21,8 +20,8 @@ export class Route<TInput extends Currency, TOutput extends Currency> {
       'CHAIN_IDS'
     )
 
-    const wrappedInput = input instanceof Token ? input : input.wrappedToken
-    const wrappedOutput = output instanceof Token ? output : output.wrappedToken
+    const wrappedInput = input instanceof NativeCurrency ? input.wrappedToken : (input as Token)
+    const wrappedOutput = output instanceof NativeCurrency ? output.wrappedToken : (output as Token)
     invariant(pairs[0].involvesToken(wrappedInput), 'INPUT')
     invariant(typeof output === 'undefined' || pairs[pairs.length - 1].involvesToken(wrappedOutput), 'OUTPUT')
 
