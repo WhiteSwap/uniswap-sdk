@@ -22,6 +22,7 @@
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
     "test:coverage": "tsdx test --coverage",
+    "size": "size-limit",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -39,15 +40,32 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
+    "@size-limit/file": "^8.1.2",
+    "@size-limit/preset-app": "^8.1.2",
     "@types/big.js": "^6.1.6",
     "@types/jest": "^24.0.25",
     "babel-plugin-transform-jsbi-to-bigint": "^1.4.0",
     "husky": "^8.0.3",
+    "size-limit": "^8.1.2",
     "tsdx": "^0.14.1"
   },
   "engines": {
     "node": ">=10"
   },
+  "size-limit": [
+    {
+      "path": "dist/sdk.esm.js",
+      "limit": "12 KB"
+    },
+    {
+      "path": "dist/sdk.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/*",
+      "limit": "120 KB"
+    }
+  ],
   "prettier": {
     "semi": false,
     "singleQuote": true,
