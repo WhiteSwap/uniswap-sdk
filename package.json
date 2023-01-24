@@ -21,7 +21,8 @@
     "start": "tsdx watch",
     "test": "tsdx test",
     "test:watch": "tsdx test --watch",
-    "test:coverage": "tsdx test --coverage"
+    "test:coverage": "tsdx test --coverage",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
@@ -36,9 +37,12 @@
     "tronweb": "^5.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "@types/big.js": "^6.1.6",
     "@types/jest": "^24.0.25",
     "babel-plugin-transform-jsbi-to-bigint": "^1.4.0",
+    "husky": "^8.0.3",
     "tsdx": "^0.14.1"
   },
   "engines": {
