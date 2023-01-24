@@ -1,4 +1,4 @@
-import { NativeCurrency, Token } from 'entities'
+import { NativeCurrency, Token } from '../entities'
 import JSBI from 'jsbi'
 import { NetworkType, Network } from './enums'
 
