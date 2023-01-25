@@ -11,7 +11,7 @@ import { parseUnits } from '@ethersproject/units'
 
 const Big = toFormat(_Big)
 
-export class CurrencyAmount<T extends Currency> extends Fraction {
+export class CurrencyAmount<T extends Currency = Currency> extends Fraction {
   public readonly currency: T
   public readonly decimalScale: JSBI
 

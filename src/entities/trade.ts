@@ -96,7 +96,7 @@ export interface BestTradeOptions {
  * Represents a trade executed against a list of pairs.
  * Does not account for slippage, i.e. trades that front run this trade and move the price.
  */
-export class Trade<TInput extends Currency, TOutput extends Currency, TTradeType extends TradeType> {
+export class Trade<TInput extends Currency = Currency, TOutput extends Currency = Currency, TTradeType extends TradeType = TradeType> {
   /**
    * The route of the trade, i.e. which pairs the trade goes through.
    */

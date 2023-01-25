@@ -9,7 +9,7 @@ import { Currency, BigintIsh, Rounding } from '../types'
 
 const Big = toFormat(_Big)
 
-export class Price<TBase extends Currency, TQuote extends Currency> extends Fraction {
+export class Price<TBase extends Currency = Currency, TQuote extends Currency = Currency> extends Fraction {
   public readonly baseCurrency: TBase // input i.e. denominator
   public readonly quoteCurrency: TQuote // output i.e. numerator
   public readonly scalar: Fraction // used to adjust the raw fraction w/r/t the decimals of the {base,quote}Token
