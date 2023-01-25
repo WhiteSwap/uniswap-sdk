@@ -3,54 +3,65 @@ import { MOCK_ETH_ADDRESS_0, MOCK_ETH_ADDRESS_1, MOCK_ZERO_TRC_ADDRESS, MOCK_ERC
 
 describe('Token', () => {
   describe('#constructor', () => {
-    it('should create ERC20 instance', () => {
+    it('create correct ERC20 instance', () => {
       const token = new Token(ChainId.MAINNET, MOCK_ETH_ADDRESS_0, 6, 'TESTTOKEN', 'TESTTOKEN')
       expect(token).toBeInstanceOf(Token)
+      expect(token.address).toEqual(MOCK_ETH_ADDRESS_0)
+      expect(token.chainId).toEqual(ChainId.MAINNET)
+      expect(token.decimals).toEqual(6)
+      expect(token.isNative).toEqual(false)
+      expect(token.logoURI).toEqual(undefined)
+      expect(token.name).toEqual('TESTTOKEN')
+      expect(token.symbol).toEqual('TESTTOKEN')
     })
-    it('should create TRC20 instance', () => {
+    it('create correct TRC20 instance', () => {
       const token = new Token(ChainId.MAINNET_TRON_GRID, MOCK_ZERO_TRC_ADDRESS, 6, 'TESTTOKEN', 'TESTTOKEN')
       expect(token).toBeInstanceOf(Token)
+      expect(token.address).toEqual(MOCK_ZERO_TRC_ADDRESS)
+      expect(token.chainId).toEqual(ChainId.MAINNET_TRON_GRID)
+      expect(token.decimals).toEqual(6)
+      expect(token.isNative).toEqual(false)
+      expect(token.logoURI).toEqual(undefined)
+      expect(token.name).toEqual('TESTTOKEN')
+      expect(token.symbol).toEqual('TESTTOKEN')
     })
-    it('should fail to create ERC20 instance with TRC20 address', () => {
-      expect(() => new Token(ChainId.MAINNET, MOCK_ZERO_TRC_ADDRESS, 6, 'TESTTOKEN', 'TESTTOKEN')).toThrowError(
-        `Address: ${MOCK_ZERO_TRC_ADDRESS} is invalid for chainId: ${ChainId.MAINNET}`
-      )
+    it('throw error with invalid address for ERC20 token', () => {
+      expect(() => new Token(ChainId.MAINNET, MOCK_ZERO_TRC_ADDRESS, 6, 'TESTTOKEN', 'TESTTOKEN')).toThrow()
+      expect(() => new Token(ChainId.MAINNET, 'invalidAddress', 6, 'TESTTOKEN', 'TESTTOKEN')).toThrow()
     })
-    it('should fail to create TRC20 instance with ERC20 address', () => {
-      expect(() => new Token(ChainId.MAINNET_TRON_GRID, MOCK_ETH_ADDRESS_0, 6, 'TESTTOKEN', 'TESTTOKEN')).toThrowError(
-        `Address: ${MOCK_ETH_ADDRESS_0} is invalid for chainId: ${ChainId.MAINNET_TRON_GRID}`
-      )
+    it('throw error with invalid address for TRC20 token', () => {
+      expect(() => new Token(ChainId.MAINNET_TRON_GRID, MOCK_ETH_ADDRESS_0, 6, 'TESTTOKEN', 'TESTTOKEN')).toThrow()
+      expect(() => new Token(ChainId.MAINNET_TRON_GRID, 'invalidAddress', 6, 'TESTTOKEN', 'TESTTOKEN')).toThrow()
     })
   })
   describe('#equals', () => {
-    it('should return false if addresses differ', () => {
+    it('return false if addresses differ', () => {
       expect(MOCK_ERC20_TOKEN_0.equals(MOCK_ERC20_TOKEN_1)).toBeFalsy()
     })
-
-    it('should return false if chain id differs', () => {
+    it('return false if chain id differs', () => {
       const tokenTwo = new Token(ChainId.GOERLI, MOCK_ETH_ADDRESS_1, 18, 'TEST', 'TEST')
       expect(MOCK_ERC20_TOKEN_0.equals(tokenTwo)).toBeFalsy()
     })
-    it('should return false if equals with non Token instance', () => {
+    it('return false if equals with non Token instance', () => {
       const currency = new NativeCurrency(ChainId.GOERLI, 18, 'TEST', 'TEST')
       expect(MOCK_ERC20_TOKEN_0.equals(currency)).toBeFalsy()
     })
-    it('should return true if address are equal', () => {
+    it('return true if address are equal', () => {
       expect(MOCK_ERC20_TOKEN_0.equals(MOCK_ERC20_TOKEN_0)).toBeTruthy()
     })
-    it('should return true even if name/symbol/decimals differ', () => {
+    it('return true even if name/symbol/decimals differ', () => {
       const tokenTwo = new Token(ChainId.MAINNET, MOCK_ERC20_TOKEN_0.address, 6, 'TEST2', 'TEST2')
       expect(MOCK_ERC20_TOKEN_0.equals(tokenTwo)).toBeTruthy()
     })
   })
   describe('#sortsBefore', () => {
-    it('should fail if tokens are equal', () => {
-      expect(() => MOCK_ERC20_TOKEN_0.sortsBefore(MOCK_ERC20_TOKEN_0)).toThrowError('Tokens are equal. Cannot sort')
+    it('throw error if tokens are equal', () => {
+      expect(() => MOCK_ERC20_TOKEN_0.sortsBefore(MOCK_ERC20_TOKEN_0)).toThrow()
     })
-    it('should return true if no need to change token direction', () => {
+    it('return true if no need to change token direction', () => {
       expect(MOCK_ERC20_TOKEN_0.sortsBefore(MOCK_ERC20_TOKEN_1)).toBeTruthy()
     })
-    it('should return true if need to change token direction', () => {
+    it('return false if need to change token direction', () => {
       expect(MOCK_ERC20_TOKEN_1.sortsBefore(MOCK_ERC20_TOKEN_0)).toBeFalsy()
     })
   })

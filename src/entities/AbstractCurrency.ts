@@ -1,3 +1,4 @@
+import { CHAINS } from '../constants'
 import { ChainId, Currency } from '../types'
 
 interface IAbstractCurrency {
@@ -21,7 +22,9 @@ export abstract class AbstractCurrency implements IAbstractCurrency {
     if (!Number.isSafeInteger(chainId) || Number.isNaN(Number(chainId))) {
       throw new Error(`Chain id must be a positive integer`)
     }
-    // TODO: add supported chainId validation
+    if (!CHAINS[chainId]) {
+      throw new Error(`Unsupported chainId. ChainId: ${chainId}. Available list of supported chain Ids: ${Object.keys(CHAINS).concat()}`)
+    }
     /*--- decimals validation ---*/
     if (Number.isNaN(Number(decimals)) || !Number.isInteger(decimals)) {
       throw new Error('Decimals value is invalid. Decimals should be a integer number')

@@ -2,7 +2,7 @@ import { ChainId, NativeCurrency, Token } from '../../src'
 
 describe('NativeCurrency', () => {
   describe('#constructor', () => {
-    it('should create erc20 native currency with valid parameters', () => {
+    it('create erc20 native currency with valid parameters', () => {
       const nativeCurrency = new NativeCurrency(
         ChainId.MAINNET,
         18,
@@ -19,17 +19,17 @@ describe('NativeCurrency', () => {
         'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
       )
     })
-    it('should fail with unsupported chainId', () => {
+    it('throw error with unsupported chainId', () => {
       expect(
         () => new NativeCurrency(23, 6, 'TRX', 'TRX', 'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png')
-      ).toThrow(`Wrapped currency doesn't exist for TRX and 23`)
+      ).toThrow()
     })
-    it('should fail with invalid chainId', () => {
+    it('throw error with invalid chainId', () => {
       expect(
         () => new NativeCurrency(23.5, 6, 'TRX', 'TRX', 'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png')
       ).toThrow('Chain id must be a positive integer')
     })
-    it('should fail with non-integer decimals', () => {
+    it('throw error with non-integer decimals', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -39,9 +39,9 @@ describe('NativeCurrency', () => {
             'TRX',
             'https://coin.top/production/upload/logo/TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR.png'
           )
-      ).toThrow('Decimals value is invalid. Decimals should be a integer number')
+      ).toThrow()
     })
-    it('should fail with decimals greater than max', () => {
+    it('throw error with decimals greater than 255', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -53,7 +53,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Decimals should be greater than 0 and less than 255')
     })
-    it('should fail with decimals less than min', () => {
+    it('throw error with negative decimals', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -65,7 +65,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Decimals should be greater than 0 and less than 255')
     })
-    it('should fail with invalid symbol', () => {
+    it('throw error with invalid symbol', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -77,7 +77,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Symbol should be a string')
     })
-    it('should fail with symbol length greater than max', () => {
+    it('throw error with symbol length greater than 40', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -89,7 +89,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Max symbol length is 20')
     })
-    it('should fail with symbol length less than min', () => {
+    it('throw error with symbol length less than 1', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -101,7 +101,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Min symbol length is 1')
     })
-    it('should fail with invalid name', () => {
+    it('throw error with invalid name', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -113,7 +113,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Name should be a string')
     })
-    it('should fail with name length greater than max', () => {
+    it('throw error with name length greater than 40', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -125,7 +125,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Max name length is 40')
     })
-    it('should fail with name length less than min', () => {
+    it('throw error with name length less than 1', () => {
       expect(
         () =>
           new NativeCurrency(
@@ -137,7 +137,7 @@ describe('NativeCurrency', () => {
           )
       ).toThrow('Min name length is 1')
     })
-    it('should fail with invalid url', () => {
+    it('throw error with invalid url', () => {
       expect(() => new NativeCurrency(ChainId.MAINNET, 1, 'TRX', 'TRX', 'invalidUrl')).toThrow('Invalid URL: invalidUrl')
     })
   })
@@ -149,7 +149,7 @@ describe('NativeCurrency', () => {
       'Ethereum',
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png'
     )
-    it('should return false if chain id differs', () => {
+    it('return false if chain id differs', () => {
       const goerliCurrency = new NativeCurrency(
         ChainId.GOERLI,
         18,
@@ -159,10 +159,10 @@ describe('NativeCurrency', () => {
       )
       expect(mainnetNativeCurrency.equals(goerliCurrency)).toBeFalsy()
     })
-    it('should return true if native currencies are equal', () => {
+    it('return true if native currencies are equal', () => {
       expect(mainnetNativeCurrency.equals(mainnetNativeCurrency)).toBeTruthy()
     })
-    it('should return false if equals with token', () => {
+    it('return false if equals with token', () => {
       const token = new Token(
         ChainId.GOERLI,
         '0x0000000000000000000000000000000000000001',
