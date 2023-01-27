@@ -1,3 +1,4 @@
+import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from '../constants'
 import { ChainId, Currency } from '../types'
 import { hexlifyAddress, isValidAddress } from '../utils'
 import { AbstractCurrency } from './AbstractCurrency'
@@ -6,6 +7,7 @@ interface IToken {
   readonly address: string
   equals: (other: Token) => boolean
   sortsBefore: (other: Token) => boolean
+  unwrap: () => Currency
 }
 
 export class Token extends AbstractCurrency implements IToken {
@@ -21,6 +23,10 @@ export class Token extends AbstractCurrency implements IToken {
     this.address = address
   }
 
+  public get id(): string {
+    return this.address
+  }
+
   public equals(other: Currency): boolean {
     return other instanceof Token && other.chainId === this.chainId && other.address === this.address
   }
@@ -30,5 +36,9 @@ export class Token extends AbstractCurrency implements IToken {
       throw new Error('Tokens are equal. Cannot sort')
     }
     return hexlifyAddress(this.address) < hexlifyAddress(other.address)
+  }
+
+  public unwrap(): Currency {
+    return this.equals(WRAPPED_NATIVE_CURRENCY[this.chainId]) ? NATIVE_CURRENCY[this.chainId] : this
   }
 }

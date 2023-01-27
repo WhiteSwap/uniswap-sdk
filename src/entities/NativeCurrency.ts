@@ -3,11 +3,7 @@ import { AbstractCurrency } from './AbstractCurrency'
 import { ChainId, Currency } from '../types'
 import { Token } from './Token'
 
-interface INativeCurrency {
-  equals: (other: NativeCurrency) => boolean
-}
-
-export class NativeCurrency extends AbstractCurrency implements INativeCurrency {
+export class NativeCurrency extends AbstractCurrency {
   public readonly wrappedToken: Token
   public readonly isNative = true
 
@@ -19,6 +15,10 @@ export class NativeCurrency extends AbstractCurrency implements INativeCurrency 
     }
 
     this.wrappedToken = wrappedToken
+  }
+
+  public get id(): string {
+    return this.symbol
   }
 
   public equals(other: Currency): boolean {

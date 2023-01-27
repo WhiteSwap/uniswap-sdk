@@ -68,5 +68,6 @@ export abstract class AbstractCurrency implements IAbstractCurrency {
     this.logoURI = logoURI
   }
 
+  protected abstract get id(): string
   protected abstract equals(other: Currency): boolean
 }
