@@ -1,6 +1,6 @@
-import { NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from '../constants'
+import { CHAINS, NATIVE_CURRENCY, WRAPPED_NATIVE_CURRENCY } from '../constants'
 import { ChainId, Currency } from '../types'
-import { hexlifyAddress, isValidAddress } from '../utils'
+import { getValidChecksumAddress, hexlifyAddress } from '../utils'
 import { AbstractCurrency } from './AbstractCurrency'
 
 interface IToken {
@@ -16,11 +16,7 @@ export class Token extends AbstractCurrency implements IToken {
 
   constructor(chainId: ChainId, address: string, decimals: number, symbol: string, name: string, logoURI?: string) {
     super(chainId, decimals, symbol, name, logoURI)
-
-    if (!isValidAddress(address, chainId)) {
-      throw new Error(`Address: ${address} is invalid for chainId: ${chainId}`)
-    }
-    this.address = address
+    this.address = getValidChecksumAddress(address, CHAINS[chainId].network)
   }
 
   public get id(): string {

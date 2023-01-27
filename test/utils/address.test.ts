@@ -1,6 +1,6 @@
 import { MOCK_DAI_MAINNET, MOCK_USDC_MAINNET } from '../__mocks__'
-import { ChainId, Token, FACTORY_ADDRESS } from '../../src'
-import { computePairAddress, getBase58Create2Address, isValidAddress } from '../../src/utils'
+import { ChainId, Token, FACTORY_ADDRESS, Network } from '../../src'
+import { computePairAddress, getBase58Create2Address, getChecksumAddress, isValidAddress } from '../../src/utils'
 
 describe('address', () => {
   describe('#computePairAddress', () => {
@@ -32,19 +32,44 @@ describe('address', () => {
   })
   describe('#isValidAddress', () => {
     it('return true for valid ethereum address', () => {
-      expect(isValidAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', ChainId.MAINNET)).toEqual(true)
+      expect(isValidAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', Network.ETHEREUM)).toEqual(true)
     })
     it('return true for valid tron address', () => {
-      expect(isValidAddress('TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8', ChainId.MAINNET)).toEqual(false)
+      expect(isValidAddress('TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8', Network.ETHEREUM)).toEqual(false)
     })
     it('return false when pass invalid ethereum address', () => {
-      expect(isValidAddress('TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8', ChainId.MAINNET)).toEqual(false)
+      expect(isValidAddress('TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8', Network.ETHEREUM)).toEqual(false)
     })
     it('return false when pass invalid tron address', () => {
-      expect(isValidAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', ChainId.MAINNET_TRON_GRID)).toEqual(false)
+      expect(isValidAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', Network.TRON)).toEqual(false)
     })
-    it('throw error when pass invalid chainId', () => {
-      expect(() => isValidAddress('0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 23)).toThrow()
+    it('returns false if not', () => {
+      expect(isValidAddress('', Network.ETHEREUM)).toBe(false)
+      expect(isValidAddress('0x0000', Network.ETHEREUM)).toBe(false)
+      expect(isValidAddress((1 as unknown) as string, Network.ETHEREUM)).toBe(false)
+      expect(isValidAddress({} as string, Network.ETHEREUM)).toBe(false)
+      expect(isValidAddress((undefined as unknown) as string, Network.ETHEREUM)).toBe(false)
+    })
+    it('returns the checksummed address', () => {
+      expect(getChecksumAddress('0xf164fc0ec4e93095b804a4795bbe1e041497b92a', Network.ETHEREUM)).toBe(
+        '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a'
+      )
+      expect(getChecksumAddress('0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', Network.ETHEREUM)).toBe(
+        '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a'
+      )
+      expect(getChecksumAddress('0xf164fc0ec4e93095b804a4795bbe1e041497b92a', Network.ETHEREUM)).toBe(
+        '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a'
+      )
+      expect(getChecksumAddress('TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR', Network.TRON)).toBe('TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR')
+    })
+
+    it('succeeds even without prefix', () => {
+      expect(getChecksumAddress('f164fc0ec4e93095b804a4795bbe1e041497b92a', Network.ETHEREUM)).toBe(
+        '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a'
+      )
+    })
+    it('fails if too long', () => {
+      expect(isValidAddress('f164fc0ec4e93095b804a4795bbe1e041497b92a0', Network.ETHEREUM)).toBe(false)
     })
   })
   describe.skip('#getBase58Create2Address', () => {

@@ -1,20 +1,37 @@
 import { isAddress, getAddress, getCreate2Address } from '@ethersproject/address'
 import invariant from 'tiny-invariant'
-import { ChainId, Network } from '../types'
+import { Network } from '../types'
 import { Token } from '../entities'
 import tronWeb from 'tronweb'
-import { CHAINS, INIT_CODE_HASH, TRON_ADDRESS_PREFIX, TRON_ADDRESS_PREFIX_REGEX } from '../constants'
+import { INIT_CODE_HASH, TRON_ADDRESS_PREFIX, TRON_ADDRESS_PREFIX_REGEX } from '../constants'
 import { keccak256, pack } from '@ethersproject/solidity'
 import { arrayify } from '@ethersproject/bytes'
 
-export function isValidAddress(address: string, chainId: ChainId): boolean {
-  if (!CHAINS[chainId]) {
-    throw new Error(`Unsupported chainId for validating address. ChainId: ${chainId}, address: ${address}`)
-  }
-  if (CHAINS[chainId].network === Network.TRON) {
+export function isValidAddress(address: string, network: Network): boolean {
+  if (network === Network.TRON) {
     return tronWeb.isAddress(address)
   }
   return isAddress(address)
+}
+
+export function getValidChecksumAddress(address: string, network: Network = Network.ETHEREUM): string {
+  if (network === Network.TRON) {
+    if (tronWeb.isAddress(address)) {
+      return address
+    }
+    throw new Error(`${address} is not a valid address.`)
+  }
+  // Alphabetical letters must be made lowercase for getAddress to work.
+  // See documentation here: https://docs.ethers.io/v5/api/utils/address/
+  return getAddress(address.toLowerCase())
+}
+
+export function getChecksumAddress(address?: string, network?: Network): string | undefined {
+  try {
+    return address ? getValidChecksumAddress(address, network) : undefined
+  } catch {
+    return undefined
+  }
 }
 
 // warns if addresses are not checksummed
