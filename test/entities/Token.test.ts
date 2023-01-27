@@ -1,4 +1,4 @@
-import { ChainId, NativeCurrency, Token } from '../../src'
+import { ChainId, NativeCurrency, NATIVE_CURRENCY, Token, WRAPPED_NATIVE_CURRENCY } from '../../src'
 import { MOCK_ETH_ADDRESS_0, MOCK_ETH_ADDRESS_1, MOCK_ZERO_TRC_ADDRESS, MOCK_ERC20_TOKEN_0, MOCK_ERC20_TOKEN_1 } from '../__mocks__'
 
 describe('Token', () => {
@@ -63,6 +63,23 @@ describe('Token', () => {
     })
     it('return false if need to change token direction', () => {
       expect(MOCK_ERC20_TOKEN_1.sortsBefore(MOCK_ERC20_TOKEN_0)).toBeFalsy()
+    })
+  })
+  describe('#unwrap', () => {
+    it('return native currency for wrapped token', () => {
+      const wrappedToken = WRAPPED_NATIVE_CURRENCY[ChainId.MAINNET]
+      expect(wrappedToken.unwrap()).toEqual(NATIVE_CURRENCY[ChainId.MAINNET])
+    })
+    it('return same instance if token is not equal to wrapped', () => {
+      expect(MOCK_ERC20_TOKEN_0.unwrap()).toEqual(MOCK_ERC20_TOKEN_0)
+    })
+  })
+  describe('#id', () => {
+    it('return native currency symbol as Id', () => {
+      expect(NATIVE_CURRENCY[ChainId.MAINNET].id).toEqual(NATIVE_CURRENCY[ChainId.MAINNET].symbol)
+    })
+    it('return token address as id', () => {
+      expect(MOCK_ERC20_TOKEN_0.id).toEqual(MOCK_ERC20_TOKEN_0.address)
     })
   })
 })
