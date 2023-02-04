@@ -24,8 +24,8 @@ export enum SolidityIntegerType {
 }
 
 export enum Network {
-  ETHEREUM,
-  TRON
+  ETHEREUM = 'ETHEREUM',
+  TRON = 'TRON'
 }
 
 export enum NetworkType {
