@@ -6,7 +6,8 @@ export enum ChainId {
   MAINNET = 1,
   GOERLI = 5,
   POLYGON = 137,
-  POLYGON_MUMBAI = 80001
+  POLYGON_MUMBAI = 80001,
+  POLYGON_ZKEVM_TESTNET = 1442
 }
 
 export enum TradeType {
