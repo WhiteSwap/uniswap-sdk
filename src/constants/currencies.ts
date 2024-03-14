@@ -32,6 +32,13 @@ export const WETH: Currencies<Token> = {
     'WETH',
     'Wrapped Mumbai Ether'
   ),
+  [ChainId.POLYGON_ZKEVM]: new Token(
+    ChainId.POLYGON_ZKEVM,
+    '0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9',
+    18,
+    'WETH',
+    'Wrapped Ether'
+  ),
   [ChainId.POLYGON_ZKEVM_TESTNET]: new Token(
     ChainId.POLYGON_ZKEVM_TESTNET,
     '0x2ad78787CCaf7FA8FAe8953FD78ab9163f81DcC8',
@@ -46,6 +53,7 @@ export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
   [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
+  [ChainId.POLYGON_ZKEVM]: new NativeCurrency(ChainId.POLYGON_ZKEVM, 18, 'ETH', 'Ether'),
   [ChainId.POLYGON_ZKEVM_TESTNET]: new NativeCurrency(ChainId.POLYGON_ZKEVM_TESTNET, 18, 'ETH', 'Ether')
 }
 
