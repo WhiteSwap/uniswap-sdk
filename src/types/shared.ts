@@ -7,6 +7,7 @@ export enum ChainId {
   GOERLI = 5,
   POLYGON = 137,
   POLYGON_MUMBAI = 80001,
+  POLYGON_ZKEVM = 1101,
   POLYGON_ZKEVM_TESTNET = 1442
 }
 
