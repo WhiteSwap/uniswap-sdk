@@ -18,6 +18,13 @@ export const WETH: Currencies<Token> = {
     'WETH',
     'Wrapped Goerli Ether'
   ),
+  [ChainId.SEPOLIA]: new Token(
+    ChainId.SEPOLIA,
+    '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
+    18,
+    'WETH',
+    'Wrapped Sepolia Ether'
+  ),
   [ChainId.POLYGON]: new Token(
     ChainId.POLYGON,
     '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
@@ -51,6 +58,7 @@ export const WETH: Currencies<Token> = {
 export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
   [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
+  [ChainId.SEPOLIA]: new NativeCurrency(ChainId.SEPOLIA, 18, 'SepoliaETH', 'Sepolia Ether'),
   [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
   [ChainId.POLYGON_ZKEVM]: new NativeCurrency(ChainId.POLYGON_ZKEVM, 18, 'ETH', 'Ether'),
