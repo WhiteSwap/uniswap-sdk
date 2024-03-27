@@ -4,6 +4,7 @@ import { ChainId, SolidityType } from '../types'
 export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
   [ChainId.MAINNET]: '0x69bd16aE6F507bd3Fc9eCC984d50b04F029EF677',
   [ChainId.GOERLI]: '0x3f0b5743bba8a552a3aa1e7907f4f44047e93f8f',
+  [ChainId.SEPOLIA]: '0x6CE81399bB459a95B65a7AA47F81999b8097BBd0',
   [ChainId.POLYGON]: '0x8D232a26173DBA87E672FE4a9103ee0A3b98c165',
   [ChainId.POLYGON_MUMBAI]: '0xC69c2c8bE7B880599eF6764A947841b58700C043',
   [ChainId.POLYGON_ZKEVM]: '0x5e52aaCc9745E226C157E33A2dcd442f2F63f413',
@@ -13,6 +14,7 @@ export const FACTORY_ADDRESS: { [key in ChainId]: string } = {
 export const INIT_CODE_HASH = {
   [ChainId.MAINNET]: '0xfad2a9a251fff38151d87d2aa4e39e75ad40feabd873069329d3c31ab9afe018',
   [ChainId.GOERLI]: '0x35d4ee2325cb088a33ff62bba214e18d081ac8c842c7a997520a5bc1ee317b9d',
+  [ChainId.SEPOLIA]: '0x9560bc32bf3c90fe8983c34ddf21cfb2ecb77aead871d2283662075f751deb1f',
   [ChainId.POLYGON]: '0x9560bc32bf3c90fe8983c34ddf21cfb2ecb77aead871d2283662075f751deb1f',
   [ChainId.POLYGON_MUMBAI]: '0x9560bc32bf3c90fe8983c34ddf21cfb2ecb77aead871d2283662075f751deb1f',
   [ChainId.POLYGON_ZKEVM]: '0x9560bc32bf3c90fe8983c34ddf21cfb2ecb77aead871d2283662075f751deb1f',
