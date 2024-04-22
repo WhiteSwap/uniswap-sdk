@@ -1,7 +1,7 @@
 import { ChainId } from '../types'
 import { NativeCurrency, Token, Currency } from '../entities'
 
-type Currencies<T extends Currency> = { [chainId in ChainId]: T }
+type Currencies<T extends Currency> = { [chainId in ChainId]?: T }
 
 export const WETH: Currencies<Token> = {
   [ChainId.MAINNET]: new Token(
