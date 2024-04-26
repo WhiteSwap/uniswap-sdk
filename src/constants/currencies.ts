@@ -49,7 +49,8 @@ export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
   [ChainId.POLYGON_ZKEVM]: new NativeCurrency(ChainId.POLYGON_ZKEVM, 18, 'ETH', 'Ether'),
   [ChainId.POLYGON_ZKEVM_TESTNET]: new NativeCurrency(ChainId.POLYGON_ZKEVM_TESTNET, 18, 'ETH', 'Ether'),
-  [ChainId.WHITECHAIN_TESTNET]: new NativeCurrency(ChainId.WHITECHAIN_TESTNET, 18, 'WBT', 'WhiteBit Token')
+  [ChainId.WHITECHAIN]: new NativeCurrency(ChainId.WHITECHAIN, 18, 'WBT', 'WhiteBIT Coin'),
+  [ChainId.WHITECHAIN_TESTNET]: new NativeCurrency(ChainId.WHITECHAIN_TESTNET, 18, 'WBT', 'WhiteBIT Coin')
 }
 
 export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
@@ -101,6 +102,13 @@ export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
     18,
     'WETH',
     'Wrapped Ether'
+  ),
+  [ChainId.WHITECHAIN]: new Token(
+    ChainId.WHITECHAIN,
+    '0xb044a2a1e3C3deb17e3602bF088811d9bDc762EA',
+    18,
+    'WWBT',
+    'Wrapped WBT'
   ),
   [ChainId.WHITECHAIN_TESTNET]: new Token(
     ChainId.WHITECHAIN_TESTNET,
