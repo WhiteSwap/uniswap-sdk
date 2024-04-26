@@ -112,7 +112,7 @@ export const WRAPPED_NATIVE_CURRENCY: Currencies<Token> = {
   ),
   [ChainId.WHITECHAIN_TESTNET]: new Token(
     ChainId.WHITECHAIN_TESTNET,
-    '0x75BaE36f5102C3330B1Eac366630D02d3A8796b3',
+    '0x1CD97Ab75c1ffDFda5a231EE9626dEeC7D46165b',
     18,
     'WWBT',
     'Wrapped WBT'
