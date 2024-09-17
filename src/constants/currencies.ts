@@ -45,7 +45,7 @@ export const NATIVE_CURRENCY: Currencies<NativeCurrency> = {
   [ChainId.MAINNET]: new NativeCurrency(ChainId.MAINNET, 18, 'ETH', 'Ether'),
   [ChainId.GOERLI]: new NativeCurrency(ChainId.GOERLI, 18, 'GöETH', 'Goerli Ether'),
   [ChainId.SEPOLIA]: new NativeCurrency(ChainId.SEPOLIA, 18, 'SepoliaETH', 'Sepolia Ether'),
-  [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'MATIC', 'Polygon Matic'),
+  [ChainId.POLYGON]: new NativeCurrency(ChainId.POLYGON, 18, 'POL', 'Polygon'),
   [ChainId.POLYGON_MUMBAI]: new NativeCurrency(ChainId.POLYGON_MUMBAI, 18, 'mMATIC', 'Polygon Mumbai Matic'),
   [ChainId.POLYGON_ZKEVM]: new NativeCurrency(ChainId.POLYGON_ZKEVM, 18, 'ETH', 'Ether'),
   [ChainId.POLYGON_ZKEVM_TESTNET]: new NativeCurrency(ChainId.POLYGON_ZKEVM_TESTNET, 18, 'ETH', 'Ether'),
